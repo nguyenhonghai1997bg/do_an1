@@ -46,6 +46,32 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item has-treeview {{ (request()->segment(2) == 'manager') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ (request()->segment(2) == 'manager') ? 'active' : '' }}">
+            <i class="nav-icon fa fa-pie-chart"></i>
+            <p>
+              {{ __('app.manager') }}
+              <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('catalogs.index') }}" class="nav-link {{ (request()->segment(3) === 'catalogs') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.catalogs') }}</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('categories.index') }}" class="nav-link {{ (request()->segment(3) === 'categories') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.categories') }}</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
         <li class="nav-item has-treeview {{ (request()->segment(2) == 'setting') ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ (request()->segment(2) == 'setting') ? 'active' : '' }}">
             <i class="nav-icon fa fa-pie-chart"></i>

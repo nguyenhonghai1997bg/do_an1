@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Catalog extends Model
 {
+    const PERPAGE = 15;
     protected $fillable = [
         'name',
         'slug'

@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
 
-class UpdateRoleRequest extends FormRequest
+class StoreCatalogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +21,10 @@ class UpdateRoleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'name' => 'required|min:2|max:191|unique:roles,name,' . $this->role,
+            'name' => 'required|min:2|unique:catalogs',
         ];
     }
 }
