@@ -17,7 +17,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin'], 'namespace' => 'Admin'], function(){
     Route::get('/', 'HomeController@index');
-
+    Route::group(['prefix' => 'manager'], function(){
+        Route::resources([
+            'catalogs' => 'CatalogController',
+            'categories' => 'CategoryController',
+        ]);
+    });
     Route::group(['prefix' => 'setting'], function(){
         Route::resources([
             'roles' => 'RoleController',

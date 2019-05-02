@@ -23,9 +23,13 @@ class UserRepository extends RepositoryEloquent implements UserRepositoryInterfa
 
     public function searchUsers($key, $role_id)
     {
-        return $this->model->where('role_id', $role_id)
-                            ->where(function($query) use ($key, $role_id) {
-                                return $query->where('name', 'like', '%' . $key . '%')->orWhere('email', 'like', '%' . $key . '%')->orWhere('phone', 'like', '%' . $key . '%');
-                            })->orderBy('id', 'DESC')->paginate($this->perPage);
+        if($role_id) {
+            return $this->model->where('role_id', $role_id)
+                                ->where(function($query) use ($key, $role_id) {
+                                    return $query->where('name', 'like', '%' . $key . '%')->orWhere('email', 'like', '%' . $key . '%')->orWhere('phone', 'like', '%' . $key . '%');
+                                })->orderBy('id', 'DESC')->paginate($this->perPage);
+        } else {
+            return $this->model->where('name', 'like', '%' . $key . '%')->orWhere('email', 'like', '%' . $key . '%')->orWhere('phone', 'like', '%' . $key . '%')->orderBy('id', 'DESC')->paginate($this->perPage);
+        }
     }
 }

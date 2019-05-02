@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    const PERPAGE = 15;
     protected $fillable = [
         'name',
         'slug',
-        'category_id'
+        'catalog_id'
     ];
 
     /**
@@ -18,6 +19,6 @@ class Category extends Model
      */
     public function catalog()
     {
-        return $this->belongsTo('App\Catelog');
+        return $this->belongsTo('App\Catalog');
     }
 }
