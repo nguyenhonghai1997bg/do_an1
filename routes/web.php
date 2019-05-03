@@ -21,6 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale
         Route::resources([
             'catalogs' => 'CatalogController',
             'categories' => 'CategoryController',
+            'paymethods' => 'PaymethodController',
             'products' => 'ProductController',
         ]);
         Route::delete('images/{id}/destroy', 'ImageController@destroy');

@@ -18,5 +18,6 @@
         'warehouse' => 'Kho hàng',
         'sale' => 'Khuyến mãi',
         'confirm' => 'Xác nhận?',
+        'paymethods' => 'Kiểu thanh toán',
     ];
 ?>

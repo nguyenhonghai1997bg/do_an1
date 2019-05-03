@@ -11,6 +11,8 @@ use App\Repositories\Catalog\CatalogRepositoryInterface;
 use App\Repositories\Catalog\CatalogRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Paymethod\PaymethodRepositoryInterface;
+use App\Repositories\Paymethod\PaymethodRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 
@@ -42,6 +44,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             ProductRepositoryInterface::class,
             ProductRepository::class
+        );
+        $this->app->singleton(
+            PaymethodRepositoryInterface::class,
+            PaymethodRepository::class
         );
     }
 
