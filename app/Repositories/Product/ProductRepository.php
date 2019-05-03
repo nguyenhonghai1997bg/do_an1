@@ -125,4 +125,34 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
 
         return $product;
     }
+
+    public function latestProducts()
+    {
+        $products = $this->model->orderBy('id', 'DESC')->limit(8)->get();
+
+        return $products;
+    }
+
+    public function topviewtProducts()
+    {
+        $products = $this->model->orderBy('view', 'DESC')->limit(8)->get();
+
+        return $products;
+    }
+
+    public function topSale()
+    {
+        $products = $this->model->whereNotNull('sale_id')->with(['sale' => function($query) {
+            $query->orderBy('sale_price');
+        }])->limit(3)->get();
+
+        return $products;
+    }
+
+    public function moreProduct($id, $price, $category_id)
+    {
+        return $this->model->where('id', '!=', $id)->where(function($query) use ($price, $category_id){
+            $query->where('price', $price)->orWhere('category_id', $category_id);
+        })->limit(4)->get();
+    }
 }

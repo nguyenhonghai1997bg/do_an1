@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use Illuminate\Http\Request;
 use App\Image;
+use File;
 trait FileUploadTrait
 {
 
@@ -16,7 +17,14 @@ trait FileUploadTrait
         foreach ($images as $key => $image) {
             if (is_file($image)) {
                 $imageName = time(). '.'. $image->getClientOriginalName();
-                $path = $image->move(public_path("images/$pathSave"), $imageName);
+                $path = public_path("images/$pathSave/" . $imageName);
+                if ($pathSave == 'products') {
+                    if(!File::exists(public_path('images/products'))) {
+                        File::makeDirectory(public_path('images/products/'));
+                    }
+                    \IMG::make($image->getRealPath())->resize(800, 800)->save($path);
+                }
+
                 $data[] = Image::create([
                     'image_url' => $imageName,
                     'product_id' => $product_id,

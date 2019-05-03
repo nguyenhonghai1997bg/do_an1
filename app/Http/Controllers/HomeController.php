@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $productRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ProductRepositoryInterface $product)
     {
-        $this->middleware('auth');
+        $this->productRepository = $product;
     }
 
     /**
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $latestProducts = $this->productRepository->latestProducts();
+        $topViewtProducts = $this->productRepository->topviewtProducts();
+        $topSale = $this->productRepository->topSale();
+
+        return view('home', compact('latestProducts', 'topViewtProducts', 'topSale'));
     }
 }
