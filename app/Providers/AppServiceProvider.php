@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         \Schema::defaultStringLength(191);
+        Product::deleted(function ($product) {
+            $product->sale->delete();
+            $product->warehouse->delete();
+        });
     }
 
     /**

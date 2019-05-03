@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
-          <li class="breadcrumb-item active">{{ __('catalog.lists') }}</li>
+          <li class="breadcrumb-item active">{{ __('catalogs.lists') }}</li>
         </ol>
       </div>
     </div>
@@ -24,7 +24,7 @@
   <div class="btn btn-success mb-3" id="new-record">Thêm mới</div>
   <div class="card">
     <div class="card-header">
-    <h3 class="card-title">{{ __('catalog.lists') }}</h3>
+    <h3 class="card-title">{{ __('catalogs.lists') }}</h3>
     <div class="card-tools">
       {{ Form::open(['method' => 'GET' ]) }}
         <div class="input-group input-group-sm" style="width: 150px;">
@@ -48,21 +48,27 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($catalogs as $key => $catalog)
-          <tr id="column-{{ $catalog->id }}">
-            <td>{{ app('request')->input('page') ? \App\Catalog::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
-            <td id="name-{{ $catalog->id }}">{{ $catalog->name }}</td>
-            <td><a href="{{ route('categories.index') . '?catalog=' . $catalog->id }}">{{ __('catalogs.categories') }}</a></td>
-            <td>
-              <div class="form-group">
-                <div class="row">
-                  <a class="text-primary fa fa-edit ml-2" id="edit-icon" onclick="showModalEdit({{ $catalog->id }})" ></a>
-                  <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('catalog.delete') }}','{{ __('app.confirm') }}', {{ $catalog->id }})"></a>
-                </div>
-              </div>
-            </td>
+        @if(count($catalogs) < 1)
+          <tr>
+            <td>{{ __('app.listEmpty') }}</td>
           </tr>
-        @endforeach
+        @else
+          @foreach($catalogs as $key => $catalog)
+            <tr id="column-{{ $catalog->id }}">
+              <td>{{ app('request')->input('page') ? \App\Catalog::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
+              <td id="name-{{ $catalog->id }}">{{ $catalog->name }}</td>
+              <td><a href="{{ route('categories.index') . '?catalog=' . $catalog->id }}">{{ __('catalogs.categories') }}</a></td>
+              <td>
+                <div class="form-group">
+                  <div class="row">
+                    <a class="text-primary fa fa-edit ml-2" id="edit-icon" onclick="showModalEdit({{ $catalog->id }})" ></a>
+                    <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('catalog.delete') }}','{{ __('app.confirm') }}', {{ $catalog->id }})"></a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          @endforeach
+        @endif
       </tbody>
     </table>
     <div class="mt-4">
