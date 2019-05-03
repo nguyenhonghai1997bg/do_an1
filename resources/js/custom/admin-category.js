@@ -28,6 +28,7 @@ function store()
             <td>#</td>
             <td id="name-` + data.id + `">` + data.name + `</td>
             <td id="catalog-` + data.id + `">` + data.catalog.name + `</td>
+            <td><a href="#">#</a></td>
             <input type="hidden" id="current-catalog-` + data.id + `" value="` + data.catalog.id + `">
             <td>
               <div class="form-group">
@@ -125,3 +126,13 @@ function deleteConfirm(title, text, id) {
     }
   );
 }
+
+$('#catalogs').change(function() {
+  var catalog_id = $(this).val();
+  var search = $('#search').val();
+  if (search) {
+    window.location.href = window.location.origin + '/admin/manager/categories?catalog=' + catalog_id + '&search=' + search;
+  } else {
+    window.location.href = window.location.origin + '/admin/manager/categories?catalog=' + catalog_id;
+  }
+})

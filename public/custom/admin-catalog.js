@@ -20,11 +20,13 @@ function store()
       name: $('#name-new').val()
     },
     success: function (data) {
+      console.log(data)
       alertify.success('Thêm thành công!')
       $('tbody').prepend(`
           <tr id="column-` + data.id + `">
             <td>#</td>
             <td id="name-` + data.id + `">` + data.name + `</td>
+            <td><a href="#">#</a></td>
             <td>
               <div class="form-group">
                 <div class="row">

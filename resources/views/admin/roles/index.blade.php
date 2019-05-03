@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
-          <li class="breadcrumb-item active">{{ __('role.lists') }}</li>
+          <li class="breadcrumb-item active">{{ __('roles.lists') }}</li>
         </ol>
       </div>
     </div>
@@ -24,7 +24,7 @@
   <div class="btn btn-success mb-3" id="new-record">Thêm mới</div>
   <div class="card">
     <div class="card-header">
-    <h3 class="card-title">{{ __('role.lists') }}</h3>
+    <h3 class="card-title">{{ __('roles.lists') }}</h3>
     <div class="card-tools">
       {{ Form::open(['method' => 'GET' ]) }}
         <div class="input-group input-group-sm" style="width: 150px;">
@@ -42,28 +42,34 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Name</th>
-          <th>Users by role</th>
+          <th>{{ __('roles.name') }}</th>
+          <th>{{ __('roles.users') }}</th>
           <th width="10%">{{ __('app.action') }}</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($roles as $key => $role)
-          <tr id="column-{{ $role->id }}">
-            <td>{{ app('request')->input('page') ? \App\Role::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
-            <td id="role-name-{{ $role->id }}">{{ $role->name }}</td>
-            <td><a href="{{ route('users.index') . '?role=' . $role->id }}">Danh sách user</a></td>
-            <td>
-              <div class="form-group">
-                <div class="row">
-                  <a class="text-primary fa fa-edit ml-2" id="edit-icon" onclick="showModalEdit({{ $role->id }})" ></a>
-                  {{-- <a href="{{ route('roles.edit', ['id' => $role->id]) }}" class="fa fa-edit"></a> --}}
-                  <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('role.delete') }}','{{ __('app.confirm') }}', {{ $role->id }})"></a>
-                </div>
-              </div>
-            </td>
+        @if(count($roles) < 1)
+          <tr>
+            <td>{{ __('app.listEmpty') }}</td>
           </tr>
-        @endforeach
+        @else
+          @foreach($roles as $key => $role)
+            <tr id="column-{{ $role->id }}">
+              <td>{{ app('request')->input('page') ? \App\Role::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
+              <td id="role-name-{{ $role->id }}">{{ $role->name }}</td>
+              <td><a href="{{ route('users.index') . '?role=' . $role->id }}">Danh sách user</a></td>
+              <td>
+                <div class="form-group">
+                  <div class="row">
+                    <a class="text-primary fa fa-edit ml-2" id="edit-icon" onclick="showModalEdit({{ $role->id }})" ></a>
+                    {{-- <a href="{{ route('roles.edit', ['id' => $role->id]) }}" class="fa fa-edit"></a> --}}
+                    <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('role.delete') }}','{{ __('app.confirm') }}', {{ $role->id }})"></a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          @endforeach
+        @endif
       </tbody>
     </table>
     <div class="mt-4">

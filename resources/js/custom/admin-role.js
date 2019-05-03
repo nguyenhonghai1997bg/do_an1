@@ -25,7 +25,7 @@ function storeRole()
           <tr id="column-` + data.id + `">
             <td>#</td>
             <td id="role-name-` + data.id + `">` + data.name + `</td>
-            <td>Danh sách Users</td>
+            <td><a href="#">#</href></td>
             <td>
               <div class="form-group">
                 <div class="row">

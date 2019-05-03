@@ -20,4 +20,13 @@ function deleteConfirm(title, text, id) {
     }
   );
 }
+$('#roles').change(function() {
+  var role_id = $(this).val();
+  var search = $('#search').val();
+  if (search) {
+    window.location.href = window.location.origin + '/admin/setting/users?role=' + role_id + '&search=' + search;
+  } else {
+    window.location.href = window.location.origin + '/admin/setting/users?role=' + role_id;
+  }
+})
 
