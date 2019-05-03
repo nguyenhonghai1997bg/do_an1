@@ -13,7 +13,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
-          <li class="breadcrumb-item active">{{ __('user.lists') }}</li>
+          <li class="breadcrumb-item active">{{ __('users.lists') }}</li>
         </ol>
       </div>
     </div>
@@ -21,13 +21,13 @@
 </section>
 <div class="row col-md-12">
   <div class="col-12">
-  <a href="{{ route('users.create') }}" class="btn btn-success mb-3">Thêm mới</a>
+  <a href="{{ route('users.create') }}" class="btn btn-success mb-3">{{ __('app.new') }}</a>
   <div class="card">
     @if(session('status'))
       <div class="alert alert-success">{{ session('status') }}</div>
     @endif
     <div class="card-header pb-4">
-    <h3 class="card-title">{{ __('role.lists') }}</h3>
+    <h3 class="card-title">{{ __('users.lists') }}</h3>
     <div class="card-tools">
       {{ Form::open(['method' => 'GET']) }}
         <div class="input-group input-group-sm">
@@ -97,15 +97,4 @@
 
   <!-- Button trigger modal -->
 <script type="text/javascript" src="{{ asset('custom/admin-user.js') }}"></script>
-<script type="text/javascript">
-  $('#roles').change(function() {
-    var role_id = $(this).val();
-    var search = $('#search').val();
-    if (search) {
-      window.location.href = window.location.origin + '/admin/setting/users?role=' + role_id + '&search=' + search;
-    } else {
-      window.location.href = window.location.origin + '/admin/setting/users?role=' + role_id;
-    }
-  })
-</script>
 @endsection

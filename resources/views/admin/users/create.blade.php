@@ -115,7 +115,4 @@
     {{ Form::close() }}
   </div>
 </div>
-<script type="text/javascript">
-  $('[data-mask]').inputmask()
-</script>
 @endsection

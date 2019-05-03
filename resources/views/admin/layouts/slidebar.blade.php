@@ -68,6 +68,12 @@
                 <p>{{ __('app.categories') }}</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('products.index') }}" class="nav-link {{ (request()->segment(3) === 'products') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.products') }}</p>
+              </a>
+            </li>
           </ul>
         </li>
 
