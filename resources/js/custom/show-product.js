@@ -151,5 +151,83 @@ function deleteReview(title, text, id) {
     function(){
       alertify.error('Cancel')
     })
+}
 
+function addCart(product_id, name, price) {
+  var quantity = $('#quantity').val();
+  var image_url = $('#image-0').attr('src');
+  $.ajax({
+    url: window.location.origin + '/carts/',
+    method: 'POST',
+    data: {
+      product_id: product_id,
+      name: name,
+      price: price,
+      quantity: quantity,
+      image_url: image_url
+    },
+    success: function(data) {
+      $('#cart-' + data.rowId).hide();
+      var html = `<div class="product product-widget" id="cart-${data.rowId}">
+          <div class="product-thumb">
+              <img src="${data.options.image_url}" alt="">
+          </div>
+          <div class="product-body">
+              <h3 class="product-price">${data.price} <span class="qty">x${data.qty}</span></h3>
+              <h2 class="product-name"><a href="product-page.html">${data.name}</a></h2>
+          </div>
+          <button class="cancel-btn" onclick="deleteCart(${data.id}, '${data.rowId}')"><i class="fa fa-trash"></i></button>
+        </div>`;
+      $('#shopping-cart-list').prepend(html)
+      $('#quantity').val(0)
+      $('#qty').text(data.count)
+      $('#subtotal').text(data.subtotal);
+      alertify.success('Thêm vào giỏ hàng thành công')
+    },
+    error: function(errors) {
+      if(errors.status == 422) {
+        if (errors.responseJSON.errors.product_id) {
+          alertify.error(errors.responseJSON.errors.product_id[0]);
+        }
+        if (errors.responseJSON.errors.name) {
+          alertify.error(errors.responseJSON.errors.name[0]);
+        }
+        if (errors.responseJSON.errors.quantity) {
+          alertify.error(errors.responseJSON.errors.quantity[0]);
+        }
+        if (errors.responseJSON.errors.price) {
+          alertify.error(errors.responseJSON.errors.price[0]);
+        }
+        if (errors.responseJSON.errors.image_url) {
+          alertify.error(errors.responseJSON.errors.image_url[0]);
+        }
+      }
+    }
+  })
+}
+
+function deleteCart(product_id, rowId, confirm, title) {
+  alertify.confirm(confirm, title,
+    function(){
+      $.ajax({
+        url: window.location.origin + '/carts/' + rowId + '/destroy',
+        method: 'DELETE',
+        success: function(data) {
+          $('#subtotal').text(data.subtotal)
+          $('#cart-' + rowId).hide();
+          if (parseInt($('#qty').text()) > 0) {
+            var q = parseInt($('#qty').text()) - 1;
+            $('#qty').text(q)
+          }
+          alertify.success(data.status);
+        },
+        error: function(error) {
+          console.log(error)
+        }
+      })
+  },
+    function(){
+      
+    }
+  )
 }

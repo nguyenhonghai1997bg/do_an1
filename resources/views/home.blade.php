@@ -3,6 +3,11 @@
 @section('content')
 @include('layouts.nav')
 <div id="home">
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.3&appId=1099092086864831&autoLogAppEvents=1"></script>
+    <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
+
         <!-- container -->
         <div class="container">
             <!-- home wrap -->
@@ -103,7 +108,7 @@
                 <!-- section-title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">{{ __('app.topSale') }}</h2>
+                        <h2 class="title">{{ __('products.topSale') }}</h2>
                         <div class="pull-right">
                             <div class="product-slick-dots-1 custom-dots"></div>
                         </div>
@@ -129,6 +134,7 @@
                         <div id="product-slick-1" class="product-slick">
                             <!-- Product Single -->
                             @foreach($topSale as $product)
+                                <?php $avg = ceil(\App\Review::where('product_id', $product->id)->avg('rating')); ?>
                                 <div class="product product-single">
                                     <div class="product-thumb">
                                         <div class="product-label">
@@ -139,23 +145,33 @@
                                             <li><span>00 M</span></li>
                                             <li><span>00 S</span></li>
                                         </ul> --}}
-                                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
-                                        <img src=" {{ asset('users/img/product01.jpg') }}" alt="">
+                                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickView') }}</a></button>
+                                        <img src=" {{ asset('images/products/' . $product->images->first()->image_url) }}" alt="">
                                     </div>
                                     <div class="product-body">
-                                        <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                        @if($product->sale)
+                                            <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                        @else
+                                            <h3 class="product-price">{{ $product->price }} VND</h3>
+                                        @endif
                                         <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o empty"></i>
+                                            @for($i = 1; $i <= $avg; $i++)
+                                                <i class="fa fa-star"></i>
+                                            @endfor
                                         </div>
                                         <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i>{{ __('app.addToCart') }}</button>
+                                            @if($product->warehouse->quantity > 0)
+                                                <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
+                                                <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                                            </button>
+                                            @else
+                                                <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;" >
+                                                <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                                            </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -179,32 +195,43 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">Top view Products</h2>
+                        <h2 class="title">{{ __('products.topView') }}</h2>
                     </div>
                 </div>
                 <!-- section title -->
                 <!-- Product Single -->
                 @foreach($topViewtProducts as $product)
+                    <?php $avg = ceil(\App\Review::where('product_id', $product->id)->avg('rating')); ?>
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="product product-single">
                             <div class="product-thumb">
-                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
+                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickView') }}</a></button>
                                 <img src=" {{ asset('images/products/' . $product->images->first()->image_url) }}" alt="">
                             </div>
                             <div class="product-body">
-                                <h3 class="product-price">{{ $product->price }} VND</h3>
+                                @if($product->sale)
+                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                @else
+                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                @endif
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o empty"></i>
+                                    @for($i = 1; $i <= $avg; $i++)
+                                        <i class="fa fa-star"></i>
+                                    @endfor
                                 </div>
                                 <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
                                 <div class="product-btns">
                                     <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                     <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                    <button class="primary-btn btn-sm add-to-cart"><i class="fa fa-shopping-cart"></i>{{ __('app.addToCart') }}</button>
+                                    @if($product->warehouse->quantity > 0)
+                                            <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                                        </button>
+                                    @else
+                                            <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;" >
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -273,32 +300,43 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">Latest Products</h2>
+                        <h2 class="title">{{ __('products.latestProduct') }}</h2>
                     </div>
                 </div>
                 <!-- section title -->
                 <!-- Product Single -->
                 @foreach($latestProducts as $product)
+                    <?php $avg = ceil(\App\Review::where('product_id', $product->id)->avg('rating')); ?>
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <div class="product product-single">
                             <div class="product-thumb">
-                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
+                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickView') }}</a></button>
                                 <img src=" {{ asset('images/products/' . $product->images->first()->image_url) }}" alt="">
                             </div>
                             <div class="product-body">
-                                <h3 class="product-price">{{ $product->price }} VND</h3>
+                                @if($product->sale)
+                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                @else
+                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                @endif
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o empty"></i>
+                                    @for($i = 1; $i <= $avg; $i++)
+                                        <i class="fa fa-star"></i>
+                                    @endfor
                                 </div>
                                 <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
                                 <div class="product-btns">
                                     <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                     <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                    <button class="primary-btn btn-sm add-to-cart"><i class="fa fa-shopping-cart"></i>{{ __('app.addToCart') }}</button>
+                                    @if($product->warehouse->quantity > 0)
+                                            <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                                        </button>
+                                    @else
+                                        <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;" >
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -316,131 +354,113 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">Picked For You</h2>
+                        <h2 class="title">{{ __('products.topOrders') }}</h2>
                     </div>
                 </div>
                 <!-- section title -->
 
                 <!-- Product Single -->
-                <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single">
-                        <div class="product-thumb">
-                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
-                            <img src=" {{ asset('users/img/product04.jpg') }}" alt="">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-price">$32.50</h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
+                @foreach($topOrders as $product)
+                    <?php $avg = ceil(\App\Review::where('product_id', $product->id)->avg('rating')); ?>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="product product-single">
+                            <div class="product-thumb">
+                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickView') }}</a></button>
+                                <img src=" {{ asset('images/products/' . $product->images->first()->image_url) }}" alt="">
                             </div>
-                            <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Product Name Goes Here</a></h2>
-                            <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                            <div class="product-body">
+                                @if($product->sale)
+                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                @else
+                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                @endif
+                                <div class="product-rating">
+                                    @for($i = 1; $i <= $avg; $i++)
+                                        <i class="fa fa-star"></i>
+                                    @endfor
+                                </div>
+                                <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
+                                <div class="product-btns">
+                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                    @if($product->warehouse->quantity > 0)
+                                        <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                                        </button>
+                                    @else
+                                        <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;">
+                                            <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
                 <!-- /Product Single -->
 
                 <!-- Product Single -->
-                <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single">
-                        <div class="product-thumb">
-                            <div class="product-label">
-                                <span>New</span>
-                            </div>
-                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
-                            <img src=" {{ asset('users/img/product03.jpg') }}" alt="">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-price">$32.50</h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
-                            <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Product Name Goes Here</a></h2>
-                            <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Product Single -->
-
-                <!-- Product Single -->
-                <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single">
-                        <div class="product-thumb">
-                            <div class="product-label">
-                                <span class="sale">-20%</span>
-                            </div>
-                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
-                            <img src=" {{ asset('users/img/product02.jpg') }}" alt="">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
-                            <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Product Name Goes Here</a></h2>
-                            <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Product Single -->
-
-                <!-- Product Single -->
-                <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="product product-single">
-                        <div class="product-thumb">
-                            <div class="product-label">
-                                <span>New</span>
-                                <span class="sale">-20%</span>
-                            </div>
-                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Quick view</a></button>
-                            <img src=" {{ asset('users/img/product01.jpg') }}" alt="">
-                        </div>
-                        <div class="product-body">
-                            <h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o empty"></i>
-                            </div>
-                            <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">Product Name Goes Here</a></h2>
-                            <div class="product-btns">
-                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- /Product Single -->
             </div>
             <!-- /row -->
         </div>
         <!-- /container -->
     </div>
+
+<script type="text/javascript">
+
+    $('.hethang').click(function () {
+        alertify.warning('{{ __('app.hethangroi') }}')
+    })
+
+    function addCart(product_id, name, price, image_url) {
+      $.ajax({
+        url: window.location.origin + '/carts/',
+        method: 'POST',
+        data: {
+          product_id: product_id,
+          name: name,
+          price: price,
+          quantity: 1,
+          image_url: image_url
+        },
+        success: function(data) {
+          $('#cart-' + data.rowId).hide();
+          var html = `<div class="product product-widget" id="cart-${data.rowId}">
+              <div class="product-thumb">
+                  <img src="${data.options.image_url}" alt="">
+              </div>
+              <div class="product-body">
+                  <h3 class="product-price">${data.price} <span class="qty">x${data.qty}</span></h3>
+                  <h2 class="product-name"><a href="product-page.html">${data.name}</a></h2>
+              </div>
+              <button class="cancel-btn" onclick="deleteCart(${data.id}, '${data.rowId}')"><i class="fa fa-trash"></i></button>
+            </div>`;
+          $('#shopping-cart-list').prepend(html)
+          $('#quantity').val(0)
+          $('#qty').text(data.count)
+          $('#subtotal').text(data.subtotal);
+          alertify.success('Thêm vào giỏ hàng thành công')
+        },
+        error: function(errors) {
+          if(errors.status == 422) {
+            if (errors.responseJSON.errors.product_id) {
+              alertify.error(errors.responseJSON.errors.product_id[0]);
+            }
+            if (errors.responseJSON.errors.name) {
+              alertify.error(errors.responseJSON.errors.name[0]);
+            }
+            if (errors.responseJSON.errors.quantity) {
+              alertify.error(errors.responseJSON.errors.quantity[0]);
+            }
+            if (errors.responseJSON.errors.price) {
+              alertify.error(errors.responseJSON.errors.price[0]);
+            }
+            if (errors.responseJSON.errors.image_url) {
+              alertify.error(errors.responseJSON.errors.image_url[0]);
+            }
+          }
+        }
+      })
+    }
+</script>
 @endsection

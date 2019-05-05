@@ -11,13 +11,32 @@
 |
 */
 
+    // Route::get('/foo', 'ProductController@searchByPrice');
+
+
 Auth::routes();
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
 Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
     Route::resource('reviews', 'ReviewController');
+    // cart
+    Route::post('carts', 'CartController@store');
+    Route::delete('carts/{id}/destroy', 'CartController@destroy');
+    Route::get('carts/checkout', 'CartController@checkout')->name('carts.checkout');
+    Route::patch('carts/update', 'CartController@update')->name('carts.update');
+    Route::post('orders', 'OrderController@store')->name('orders.store');
+    Route::get('orders/done', 'OrderController@orderDone')->name('orders.done');
+
+    Route::get('orders/list', 'OrderController@listOrderByUser')->middleware('auth')->name('users.show.list-order');
+    Route::get('orders/list/deleted', 'OrderController@listOrderByUserDeleted')->middleware('auth')->name('users.show.list-order-deleted');
+    Route::get('orders/{id}/detail', 'OrderController@detailOrder')->middleware('auth')->name('users.orders.detail');
+    Route::delete('orders/{id}/destroy', 'OrderController@destroy')->middleware('auth')->name('users.orders.delete');
+
+    Route::get('category/products/', 'ProductController@search')->name('users.search');
+    Route::get('products/search-by-price', 'ProductController@searchByPrice');
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
@@ -29,6 +48,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale
             'paymethods' => 'PaymethodController',
             'products' => 'ProductController',
         ]);
+        Route::post('notifies/seen/{id}', 'NotifyController@seen');
+        Route::get('notifies/', 'NotifyController@index')->name('admin.notifies.index');
+        Route::get('orders/waiting', 'OrderController@listOrderWaiting')->name('admin.orders.waiting');
+        Route::get('orders/process', 'OrderController@listOrderProcess')->name('admin.orders.process');
+
+        Route::get('orders/detail/{id}', 'OrderController@show')->name('admin.orders.show');
+        Route::get('orders/done', 'OrderController@listOrderDone')->name('admin.orders.done');
+        Route::get('orders/deleted', 'OrderController@listOrderDeleted')->name('admin.orders.deleted');
+        Route::post('orders/do/done', 'OrderController@orderDone');
+        Route::post('orders/do/waiting', 'OrderController@orderWaiting');
+        Route::post('orders/do/process', 'OrderController@orderProcess');
         Route::delete('images/{id}/destroy', 'ImageController@destroy');
         Route::post('products/{id}/change-status', 'ProductController@changeStatus');
     });

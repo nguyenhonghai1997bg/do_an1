@@ -15,6 +15,7 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
 {
     use FileUploadTrait;
     public $perPage;
+    public $pageUser = 8;
 
     public function __construct(Product $product)
     {
@@ -125,24 +126,24 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
 
         return $product;
     }
-
+    //frontend
     public function latestProducts()
     {
-        $products = $this->model->orderBy('id', 'DESC')->limit(8)->get();
+        $products = $this->model->active()->orderBy('id', 'DESC')->limit($this->pageUser)->get();
 
         return $products;
     }
 
     public function topviewtProducts()
     {
-        $products = $this->model->orderBy('view', 'DESC')->limit(8)->get();
+        $products = $this->model->active()->orderBy('view', 'DESC')->limit($this->pageUser)->get();
 
         return $products;
     }
 
     public function topSale()
     {
-        $products = $this->model->whereNotNull('sale_id')->with(['sale' => function($query) {
+        $products = $this->model->active()->whereNotNull('sale_id')->with(['sale' => function($query) {
             $query->orderBy('sale_price');
         }])->limit(3)->get();
 
@@ -151,8 +152,44 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
 
     public function moreProduct($id, $price, $category_id)
     {
-        return $this->model->where('id', '!=', $id)->where(function($query) use ($price, $category_id){
+        return $this->model->active()->where('id', '!=', $id)->where(function($query) use ($price, $category_id){
             $query->where('price', $price)->orWhere('category_id', $category_id);
         })->limit(4)->get();
     }
+
+    public function topOrders()
+    {
+        $list = [];
+        $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->limit($this->pageUser)->get()->toArray();
+        foreach($top as $item) {
+            $list[] = $this->model->find($item['product_id']);
+        }
+
+        return $list;
+    }
+
+    public function userSearch($key, $category_id)
+    {
+        if ($category_id) {
+            return $this->model->active()->where('category_id', $category_id)->where(function($query) use ($key) {
+                $query->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%');
+            });
+        } else {
+            return $this->model->active()->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%');
+        }
+    }
+
+    public function userSearchByPrice($key, $category_id, $from, $to)
+    {
+        if ($category_id && $category_id > 0) {
+            return $this->model->active()->where('price', '>=', $from)->where('price', '<=', $to)->where('category_id', $category_id)->where(function($query) use ($key) {
+                $query->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%');
+            })->paginate(\App\Product::PERPAGE);
+        } elseif($from && $to) {
+            return $this->model->active()->where('price', '>=', $from)->where('price', '<=', $to)->where(function($query) use ($key) {
+                $query->where('name', 'like', '%' . $key . '%')->orWhere('description', 'like', '%' . $key . '%');
+            })->paginate(\App\Product::PERPAGE);
+        }
+    }
+
 }

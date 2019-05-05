@@ -80,6 +80,34 @@
                 <p>{{ __('app.products') }}</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.orders.waiting') }}" class="nav-link {{ (request()->segment(4) === 'waiting') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.ordersWaiting') }}</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.orders.process') }}" class="nav-link {{ (request()->segment(4) === 'process') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.ordersProcess') }}</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.orders.done') }}" class="nav-link {{ (request()->segment(4) === 'done') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.ordersDone') }}</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ route('admin.orders.deleted') }}" class="nav-link {{ (request()->segment(4) === 'done') ? 'active' : '' }}">
+                <i class="fa fa-circle-o nav-icon"></i>
+                <p>{{ __('app.orderDeleted') }}</p>
+              </a>
+            </li>
           </ul>
         </li>
 

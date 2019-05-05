@@ -14,8 +14,11 @@
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <!-- jQuery -->
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 </head>
 <script type="text/javascript">
   $.ajaxSetup({
@@ -25,6 +28,36 @@
   });
 </script>
 <body class="hold-transition sidebar-mini">
+  <script type="text/javascript">
+    var pusher = new Pusher('a70261703ef25d858f99', {
+      encrypted: true,
+      cluster: 'ap1',
+    });
+
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('order-channel');
+
+    // Bind a function to a Event (the full Laravel class)
+    channel.bind('App\\Events\\OrderEvent', function(data) {
+        $('#list-notifies').prepend(`
+            <div class="dropdown-divider"></div>
+            <a href="${data.link}" class="dropdown-item" onclick="seen(${data.notify_id})">
+              <i class="mr-2"></i> <span id="message" onclick="seen(${data.notify_id})">${data.notify}</span>
+            </a>
+          `)
+
+        var countNotify = parseInt($('#count-notifies').text());
+        $('#count-notifies').text(countNotify + 1)
+        $('#count-notifies2').text(countNotify + 1)
+        alertify.success('{{ __('app.newNotify') }}')
+    });
+    function seen(id) {
+      $.ajax({
+        url: window.location.origin + '/admin/manager/notifies/seen/' + id,
+        method: 'POST'
+      })
+    }
+  </script>
   <!-- /.navbar -->
   @include('admin.layouts.navbar')
   <!-- Main Sidebar Container -->

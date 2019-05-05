@@ -28,7 +28,8 @@ class HomeController extends Controller
         $latestProducts = $this->productRepository->latestProducts();
         $topViewtProducts = $this->productRepository->topviewtProducts();
         $topSale = $this->productRepository->topSale();
+        $topOrders = $this->productRepository->topOrders();
 
-        return view('home', compact('latestProducts', 'topViewtProducts', 'topSale'));
+        return view('home', compact('latestProducts', 'topViewtProducts', 'topSale', 'topOrders'));
     }
 }
