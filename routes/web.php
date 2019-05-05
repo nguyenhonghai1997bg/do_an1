@@ -12,8 +12,13 @@
 */
 
 Auth::routes();
-
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
+    Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
+    Route::resource('reviews', 'ReviewController');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
     Route::get('/', 'HomeController@index');
@@ -35,9 +40,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale
     });
 });
 
-Route::get('/', function () {
-    return view('admin.index');
-});
+// Route::get('/', function () {
+//     return view('admin.index');
+// });
 
 Route::group(['prefix' => 'setLocale'], function() {
     Route::get('/{locale}', 'LocaleController@change_language')->name('set_locale');

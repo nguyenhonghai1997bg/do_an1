@@ -15,6 +15,8 @@ use App\Repositories\Paymethod\PaymethodRepositoryInterface;
 use App\Repositories\Paymethod\PaymethodRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\Review\ReviewRepositoryInterface;
+use App\Repositories\Review\ReviewRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -48,6 +50,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(
             PaymethodRepositoryInterface::class,
             PaymethodRepository::class
+        );
+        $this->app->singleton(
+            ReviewRepositoryInterface::class,
+            ReviewRepository::class
         );
     }
 

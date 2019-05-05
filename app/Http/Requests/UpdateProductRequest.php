@@ -31,7 +31,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'required|numeric|min:1|max:100000000',
             'depot_name' => 'required|min:3|max:191',
             'quantity' => 'required|numeric|max:100000000',
-            'sale_price' => 'nullable|numeric|min:1|max:100000000',
+            'sale_price' => 'nullable|numeric|min:1|max:100',
         ];
     }
 }

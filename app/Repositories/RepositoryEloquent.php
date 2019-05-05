@@ -21,6 +21,11 @@ abstract class RepositoryEloquent implements RepositoryInterface
 		return $this->model->findOrFail($id);
 	}
 
+    public function count()
+    {
+        return $this->model->count();
+    }
+
 	/**
 	 * get all
 	 * @param  array  $columns

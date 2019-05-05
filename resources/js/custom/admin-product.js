@@ -57,6 +57,9 @@ function removeImage(id) {
     function(){
       $.ajax({
         url: window.location.origin + '/admin/manager/images/' + id + '/destroy',
+        data: {
+          model: 'product'
+        },
         method: 'DELETE',
         success: function(data) {
           console.log(data)

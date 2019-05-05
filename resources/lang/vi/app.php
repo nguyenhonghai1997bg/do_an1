@@ -19,5 +19,9 @@
         'sale' => 'Khuyến mãi',
         'confirm' => 'Xác nhận?',
         'paymethods' => 'Kiểu thanh toán',
+        'addToCart' => 'Thêm giỏ hàng',
+        'quickView' => 'Xem nhanh',
+        'forYou' => 'Có thể bạn tìm',
+        'notFoudModel' => 'Không tìm thấy bản ghi :id',
     ];
 ?>

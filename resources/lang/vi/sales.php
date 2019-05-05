@@ -1,7 +1,7 @@
 <?php
 	return [
 		'description' => 'Chi tiết',
-		'price' => 'Giá',
+		'price' => 'Phần trăm sale',
 		'hide' => 'Ẩn',
 		'add' => 'Thêm khuyến mãi',
 	];
