@@ -88,27 +88,22 @@
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="fa fa-bell-o"></i>
-        <span class="badge badge-warning navbar-badge">15</span>
+        <span class="badge badge-warning navbar-badge" id="count-notifies">{{ $countNotifiesAdmin }}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-header">15 Notifications</span>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">
-          <i class="fa fa-envelope mr-2"></i> 4 new messages
-          <span class="float-right text-muted text-sm">3 mins</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">
-          <i class="fa fa-users mr-2"></i> 8 friend requests
-          <span class="float-right text-muted text-sm">12 hours</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item">
-          <i class="fa fa-file mr-2"></i> 3 new reports
-          <span class="float-right text-muted text-sm">2 days</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        <span class="dropdown-header"><span id="count-notifies2">{{ $countNotifiesAdmin }}</span> {{ __('notifies.notifies') }}</span>
+        <div id="list-notifies"></div>
+          @foreach($notifiesAdmin as $notify)
+            <div class="dropdown-divider"></div>
+            <a href="{{ $notify->link }}" class="dropdown-item" onclick="seen({{ $notify->id }})">
+              <i class="mr-2"></i> <span id="message">{{ $notify->notify }}</span>
+              @if($notify->status == 1)
+                <span class="float-right text-muted text-sm"><i class="mr-2"><i class="fa fa-check" aria-hidden="true"></i></i></span>
+              @endif
+            </a>
+          @endforeach
+          <div class="dropdown-divider"></div>
+          <a href="{{ route('admin.notifies.index') }}" class="dropdown-item dropdown-footer">{{ __('notifies.seeAll') }}</a>
       </div>
     </li>
     <li class="nav-item">
@@ -117,3 +112,12 @@
     </li>
   </ul>
 </nav>
+
+<script type="text/javascript">
+  function seen(id) {
+    $.ajax({
+      url: window.location.origin + '/admin/manager/notifies/seen/' + id,
+      method: 'POST'
+    })
+  }
+</script>

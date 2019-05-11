@@ -33,4 +33,10 @@ class Product extends Model
     {
         return $this->hasMany('App\Review');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
 }

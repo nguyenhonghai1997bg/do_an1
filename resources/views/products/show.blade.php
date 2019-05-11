@@ -6,6 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 
 @include('layouts.nav-child')
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.3&appId=1099092086864831&autoLogAppEvents=1"></script>
+
 <div id="breadcrumb">
   <div class="container">
     <ul class="breadcrumb">
@@ -24,9 +27,9 @@
       <div class="product product-details clearfix">
         <div class="col-md-6">
           <div id="product-main-view">
-            @foreach($product->images as $image)
+            @foreach($product->images as $key => $image)
             <div class="product-view" >
-              <img src="{{ asset('images/products/' . $image->image_url) }}" alt="" height="100%">
+              <img src="{{ asset('images/products/' . $image->image_url) }}" alt="" height="100%" id="image-{{ $key }}">
             </div>
             @endforeach
           </div>
@@ -43,24 +46,24 @@
             <div class="product-label">
               {{-- <span>New</span> --}}
               @if($product->sale)
-                <span class="sale">-{{ $product->sale->sale_price }}%</span>
+                <span class="sale">-{{ number_format($product->sale->sale_price) }}%</span>
               @endif
             </div>
             <h2 class="product-name">{{ $product->name }}</h2>
             @if($product->sale)
               <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
             @else
-              <h3 class="product-price">{{ $product->price }} VND</h3>
+              <h3 class="product-price">{{ number_format($product->price) }} VND</h3>
             @endif
+
+            <div>{{ __('products.view') }}: {{ $product->view }}</div>
             <div>
               <div class="product-rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o empty"></i>
+                @for($i = 1; $i <= $avg; $i++)
+                  <i class="fa fa-star"></i>
+                @endfor
               </div>
-              <a href="#">3 Review(s) / Add Review</a>
+              <a href="#">{{ $countReview }} {{ __('products.review') }}</a>
             </div>
             <p><strong>{{ __('products.status') }}:</strong>@if($product->warehouse->quantity > 0) {{ __('products.stocking') }} @else {{ __('products.outOfStock') }} @endif </p>
             <p>{{ $product->description }}</p>
@@ -83,13 +86,25 @@
             <div class="product-btns">
               <div class="qty-input">
                 <span class="text-uppercase">{{ __('orders.quantity') }}: </span>
-                <input class="input" type="number">
+                <input class="input" type="number" name="quantity" value="1" id="quantity">
               </div>
-              <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}</button>
+              @if($product->warehouse->quantity > 0)
+                <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
+                      <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                  </button>
+              @else
+                <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;">
+                  <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                </button>
+              @endif
               <div class="pull-right">
-                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+{{--                 <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                 <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
                 <button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+ --}}              </div>
+              <div class="fb-share-button" 
+                data-href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}" 
+                data-layout="button_count">
               </div>
             </div>
           </div>
@@ -300,5 +315,10 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+   $('.hethang').click(function () {
+        alertify.warning('{{ __('app.hethangroi') }}')
+    })
+</script>
 <script type="text/javascript" src="{{ asset('custom/show-product.js') }}"></script>
 @endsection

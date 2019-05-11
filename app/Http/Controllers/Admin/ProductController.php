@@ -102,4 +102,9 @@ class ProductController extends Controller
 
         return response()->json(['status' => 'success']);
     }
+
+    public function show()
+    {
+        
+    }
 }
