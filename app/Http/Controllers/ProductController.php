@@ -49,4 +49,14 @@ class ProductController extends Controller
 
         return view('products.search', compact('products', 'maxPrice'));
     }
+
+    public function listSale()
+    {
+        $maxPrice = \App\Product::active()->max('price');
+        $to = $request->to ?? $maxPrice;
+        $from = $request->from ?? 0;
+        $products = \App\Product::active()->whereNotNull('sale_id')->with('sale')->paginate(\App\Product::PERPAGE);
+        
+        return view('products.search', compact('products', 'maxPrice'));
+    }
 }

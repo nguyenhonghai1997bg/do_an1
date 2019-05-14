@@ -27,7 +27,9 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-
+      @if(session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+      @endif
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="form-group has-feedback">
@@ -56,7 +58,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __('users.login') }}</button>
           </div>
           <!-- /.col -->
         </div>
@@ -81,7 +83,7 @@
         @endif
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="{{ route('register') }}" class="text-center">{{ __('users.register') }}</a>
       </p>
     </div>
     <!-- /.login-card-body -->

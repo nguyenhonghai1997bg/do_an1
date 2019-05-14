@@ -27,6 +27,7 @@
     }
   });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.5/push.js"></script>
 <body class="hold-transition sidebar-mini">
   <script type="text/javascript">
     var pusher = new Pusher('a70261703ef25d858f99', {
@@ -49,7 +50,17 @@
         var countNotify = parseInt($('#count-notifies').text());
         $('#count-notifies').text(countNotify + 1)
         $('#count-notifies2').text(countNotify + 1)
-        alertify.success('{{ __('app.newNotify') }}')
+        alertify.success(data.notify)
+
+        Push.create(data.notify, {
+          body: data.notify,
+          icon: "{{ asset('images/logo.jpg') }}",
+          timeout: 5000,
+          onClick: function() {
+            window.focus();
+            window.location.href = data.link
+          }
+      });
     });
     function seen(id) {
       $.ajax({

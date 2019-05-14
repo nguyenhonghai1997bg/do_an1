@@ -8,7 +8,8 @@
 <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
+                <li><a href="#">{{ __('app.home') }}</a></li>
+                <li><a href="#">{{ request('category_id') ? \App\Category::findOrFail(request('category_id'))->name . ' ' . \App\Category::findOrFail(request('category_id'))->catalog->name : 'all' }}</a></li>
                 <li class="active">Products</li>
             </ul>
         </div>
@@ -114,15 +115,25 @@
                 <!-- MAIN -->
                 <div id="main" class="col-md-9">
                     <div id="store">
+                        @if (count($products) < 1)
+                            <div class="alert alert-info">{{ __('app.listEmpty') }}</div>
+                        @endif
                         <!-- row -->
-                        <div class="row" id="row">
+                        <div id="product-slick-1" class="product-slick">
                             <!-- Product Single -->
                             @foreach($products as $product)
                                 <?php $avg = ceil(\App\Review::where('product_id', $product->id)->avg('rating')); ?>
-                                <div class="col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product product-single">
+                                <div class="product product-single">
                                     <div class="product-thumb">
-                                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickview') }}</a></button>
+                                        <div class="product-label">
+                                            <span class="sale">-{{ $product->sale->sale_price }}%</span>
+                                        </div>
+                                       {{--  <ul class="product-countdown">
+                                            <li><span>00 H</span></li>
+                                            <li><span>00 M</span></li>
+                                            <li><span>00 S</span></li>
+                                        </ul> --}}
+                                        <button class="main-btn quick-view"><i class="fa fa-search-plus"></i><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ __('app.quickView') }}</a></button>
                                         <img src=" {{ asset('images/products/' . $product->images->first()->image_url) }}" alt="">
                                     </div>
                                     <div class="product-body">
@@ -138,26 +149,26 @@
                                         </div>
                                         <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
                                         <div class="product-btns">
-                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             @if($product->warehouse->quantity > 0)
                                                 <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
-                                                    <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
-                                                </button>
+                                                <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
+                                            </button>
                                             @else
-                                                <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;">
-                                                    <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
-                                                </button>
+                                                <button class="primary-btn add-to-cart btn-sm hethang" style="background: #999999;" >
+                                                <i class="fa fa-shopping-cart"></i> {{ __('app.hethang') }}
+                                            </button>
                                             @endif
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                             @endforeach
                             {{ $products->links() }}
                             <!-- /Product Single -->
 
                             <!-- Product Single -->
-                        
+                            <!-- /Product Single -->
+
+                            <!-- Product Single -->
                             <!-- /Product Single -->
                         </div>
                         <!-- /row -->

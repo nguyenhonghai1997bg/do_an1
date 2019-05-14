@@ -7,7 +7,7 @@
 				<span class="category-header">Categories <i class="fa fa-list"></i></span>
 				<ul class="category-list">
 					@foreach($categories2 as $category)
-					<li><a href="{{ url("products/search-by-price?category_id=$category->id") }} }}">{{ $category->name . ' ' . $category->catalog->name }}</a></li>
+					<li><a href="{{ url("products/search-by-price?category_id=$category->id") }}">{{ $category->name . ' ' . $category->catalog->name }}</a></li>
 					@endforeach
 				</ul>
 			</div>

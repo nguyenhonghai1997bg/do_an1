@@ -62,6 +62,23 @@ class OrderController extends Controller
         return response()->json(['status' => __('orders.process')]);
     }
 
+    public function orderDestroy($id)
+    {
+        $orderOld = $this->orderRepository->findOrFail($id);
+        $order = $this->orderRepository->destroyOrder($id);
+        $link = route('users.orders.detail', ['id' => $id]);
+        $notify = \App\Notify::create([
+            'link' => $link,
+            'notify' => __('orders.deletedOrder'),
+            'to_user' => $orderOld->user_id ?? null,
+        ]);
+        if (\Auth::user()) {
+            event(new \App\Events\OrderByAdminEvent(__('orders.deletedOrder'), $link, $order, $notify->id, $notify->to_user ?? ''));
+        }
+        
+        return $order;
+    }
+
     public function listOrderDeleted()
     {
         $orders = $this->orderRepository->listOrderDeleted();
@@ -76,4 +93,30 @@ class OrderController extends Controller
 
         return view('admin.orders.detail', compact('detailOrders', 'order'));
     }
+
+    public function getAllOrdersDone(Request $request)
+    {
+        $data = [];
+        $orders = $this->orderRepository->getAllOrdersDone($request->year);
+        $data['orderDone'] = $orders;
+
+        return $data;
+    }
+
+    public function getAllOrders(Request $request)
+    {
+        $orders = $this->orderRepository->getAllOrders($request->year);
+
+        return $orders;
+    }
+
+
+
+    public function getDataDoughnut(Request $request)
+    {
+        $orders = $this->orderRepository->getDataDoughnut($request->year);
+        
+        return $orders;
+    }
+
 }

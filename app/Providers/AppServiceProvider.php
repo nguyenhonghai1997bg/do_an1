@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $notifiesAdmin = Notify::whereNull('to_user')->orderBy('id', 'DESC')->paginate(Notify::PERPAGE);
+        $notifiesAdmin = Notify::whereNull('to_user')->where('status', 0)->orderBy('id', 'DESC')->paginate(Notify::PERPAGE);
         $countNotifiesAdmin = Notify::whereNull('to_user')->where('status', 0)->count();
         $categories2 = \App\Category::with('catalog')->get(['id', 'name', 'catalog_id']);
         $catalogs2 = \App\Catalog::with('categories')->get(['id', 'name']);

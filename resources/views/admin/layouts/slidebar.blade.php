@@ -27,21 +27,15 @@
           <a href="#" class="nav-link {{ (request()->segment(2) == '') ? 'active' : '' }}">
             <i class="nav-icon fa fa-dashboard"></i>
             <p>
-              Starter Pages
+              {{ __('app.home') }}
               <i class="right fa fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="{{ route('admin.home') }}" class="nav-link active">
                 <i class="fa fa-circle-o nav-icon"></i>
-                <p>Active Page</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fa fa-circle-o nav-icon"></i>
-                <p>Inactive Page</p>
+                <p>{{ __('app.home') }}</p>
               </a>
             </li>
           </ul>
@@ -103,7 +97,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="{{ route('admin.orders.deleted') }}" class="nav-link {{ (request()->segment(4) === 'done') ? 'active' : '' }}">
+              <a href="{{ route('admin.orders.deleted') }}" class="nav-link {{ (request()->segment(4) === 'deleted') ? 'active' : '' }}">
                 <i class="fa fa-circle-o nav-icon"></i>
                 <p>{{ __('app.orderDeleted') }}</p>
               </a>

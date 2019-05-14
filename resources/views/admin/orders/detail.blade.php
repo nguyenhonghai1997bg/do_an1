@@ -17,8 +17,29 @@
           <div><b>{{ __('orders.paymethod') }}:</b> {{ $order->paymethod->name }}</div>
           <div><b>{{ __('orders.total') }}:</b> {{ number_format($order->total) }} VND</div>
           <div><b>{{ __('orders.created_at') }}:</b> {{ $order->created_at }}</div>
+           @if($order->deleted_at)
+            <div><b>{{ __('orders.delted_by') }}:</b>
+                @if($order->deleted_by)
+                  {{ $order->delted_by }}
+                @endif
+            </div>
+          @endif
           <div><b>{{ __('orders.status') }}:</b>
             @if($order->deleted_at)
+              <span class="text-danger">{{ __('orders.deleted') }}</span>
+            @else
+              @if($order->status == \App\Order::WAITING)
+                <span class="text-warning">{{ __('orders.waiting') }}</span>
+              @endif
+              @if($order->status == \App\Order::PROCESS)
+                <span class="text-primary">{{ __('orders.process') }}</span>
+              @endif
+              @if($order->status == \App\Order::DONE)
+                <span class="text-success">{{ __('orders.done') }}</span>
+              @endif
+            @endif
+          </div>
+          @if($order->deleted_at)
             <span>{{ Form::button(__('order.deleted'), ['id' => 'danger', 'class' => 'btn btn-danger btn-sm mt-1', 'id' => 'perform1']) }}</span>
             @else
               @if($order->status > 0 && $order->status != 2)
@@ -30,10 +51,7 @@
               @if($order->status < 2)
                 <span>{{ Form::button(__('order.done'), ['id' => 'done', 'class' => 'btn btn-success btn-sm mt-1', 'onclick' => "done($order->id)", 'id' => 'perform2']) }}</span>
               @endif
-          </div>
-
-          
-          @endif
+            @endif
         </div>
       </div>
       

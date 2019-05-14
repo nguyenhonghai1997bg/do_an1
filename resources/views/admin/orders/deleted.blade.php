@@ -24,16 +24,6 @@
   <div class="card">
     <div class="card-header">
     <h3 class="card-title">{{ __('orders.listDeleted') }}</h3>
-    <div class="card-tools">
-      {{ Form::open(['method' => 'GET' ]) }}
-        <div class="input-group input-group-sm" style="width: 150px;">
-          <input type="text" name="search" class="form-control float-right" placeholder="Search" value="{{ $key ?? '' }}">
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-          </div>
-        </div>
-      {{ Form::close() }}
-    </div>
     </div>
     <!-- /.card-header -->
     <div class="card-body table-responsive p-0">
@@ -44,7 +34,8 @@
           <th>{{ __('orders.name') }}</th>
           <th>{{ __('orders.price') }}</th>
           <th>{{ __('orders.detail') }}</th>
-          {{-- <th width="10%">{{ __('app.action') }}</th> --}}
+          <th width="10%">{{ __('orders.deleted_at') }}</th>
+          <th width="10%">{{ __('orders.deleted_by') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -59,6 +50,8 @@
               <td id="name-{{ $order->user->id }}">{{ $order->user->name }}</td>
               <td>{{ number_format($order->total) }} VND</td>
               <th><a href="{{ route('admin.orders.show', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
+              <td>{{ $order->deleted_at }}</td>
+              <td>{{ $order->deleted_by ?? '' }}</td>
               {{-- <td>
                 <div class="form-group">
                   <div class="row">

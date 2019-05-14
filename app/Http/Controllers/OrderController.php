@@ -33,12 +33,19 @@ class OrderController extends Controller
             $carts = \Cart::content();
             $detail = [];
             foreach($carts as $key => $cart) {
+                $product22 = \App\Product::findOrFail($cart->id);
+                if ($product22->warehouse->quantity - (int)$cart->qty < 0) {
+                    return redirect()->back()->with('warning', 'Sản phẩm ' . $product22->name . ' chỉ còn ' . $product22->warehouse->quantity . ' sản phẩm');
+                }
                 $detail[] = DetailOrder::create([
-                    'product_id' => $cart->id,
+                    'product_id' => (int)$cart->id,
                     'quantity' => (int)$cart->qty,
-                    'order_id' => $order->id,
+                    'order_id' => (int)$order->id,
                     'price' => (int)$cart->price,
                 ]);
+                $product = \App\Product::findOrFail((int)$cart->id);
+                $product->warehouse->quantity = $product->warehouse->quantity - (int)$cart->qty;
+                $product->warehouse->save();
             }
             \Cart::destroy();
             $link = route('admin.orders.show', ['id' => $order->id]);
@@ -79,7 +86,7 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $order = $this->orderRepository->destroy($id);
+        $order = $this->orderRepository->destroyOrder($id);
         $link = route('admin.orders.show', ['id' => $id]);
         $notify = \App\Notify::create([
             'link' => $link,

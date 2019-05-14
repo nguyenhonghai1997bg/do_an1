@@ -43,7 +43,9 @@
                  <th>{{ __('orders.address') }}</th>
                 <th>{{ __('orders.price') }}</th>
                 <th>{{ __('orders.detail') }}</th>
-                <th>{{ __('created_at') }}</th>
+                <th>{{ __('orders.created_at') }}</th>
+                <th>{{ __('orders.deleted_at') }}</th>
+                <th>{{ __('orders.deleted_by') }}</th>
                 <th width="10%">{{ __('orders.status') }}</th>
               </tr>
             </thead>
@@ -61,7 +63,9 @@
                     <td>{{ $order->address }}</td>
                     <td>{{ number_format($order->total) }} VND</td>
                     <th><a href="{{ route('users.orders.detail', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
-                    <th>{{ !empty($order->deleted_at) ? $order->deleted_at : $order->created_at }}</th>
+                    <th>{{ !empty($order->created_at) ? $order->created_at : '' }}</th>
+                    <th>{{ !empty($order->deleted_at) ? $order->deleted_at : '' }}</th>
+                    <th>{{ !empty($order->deleted_by) ? $order->deleted_by : '' }}</th>
                     <td>
                       <div class="form-group">
                         <div class="row" id="status-{{ $order->id }}">

@@ -16,6 +16,9 @@
   <div><b>{{ __('orders.paymethod') }}:</b> {{ $order->paymethod->name }}</div>
   <div><b>{{ __('orders.total') }}:</b> {{ number_format($order->total) }} VND</div>
   <div><b>{{ __('orders.created_at') }}:</b> {{ $order->created_at }}</div>
+  @if ($order->deleted_at)
+    <div><b>{{ __('orders.delted_by') }}:</b>@if($order->deleted_by) {{ $order->delted_by }}@endif</div>
+  @endif
   <div><b>{{ __('orders.status') }}:</b>
     @if ($order->deleted_at)
       <span class="text-danger">{{ __('orders.deleted') }}</span>

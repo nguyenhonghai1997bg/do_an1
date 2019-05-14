@@ -41,6 +41,7 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>{{ __('orders.id') }}</th>
           <th>{{ __('orders.name') }}</th>
           <th>{{ __('orders.price') }}</th>
           <th>{{ __('orders.detail') }}</th>
@@ -56,7 +57,8 @@
           @foreach($orders as $key => $order)
             <tr id="column-{{ $order->id }}">
               <td>{{ app('request')->input('page') ? \App\Order::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
-              <td id="name-{{ $order->user->id }}">{{ $order->user->name }}</td>
+              <td>{{ $order->id }}</td>
+              <td>{{ $order->name }}</td>
               <td>{{ number_format($order->total) }} VND</td>
               <th><a href="{{ route('admin.orders.show', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
               <td>
@@ -64,6 +66,7 @@
                   <div class="row">
                     <span class="btn btn-success btn-sm mt-1" onclick="done({{ $order->id }})">{{ __('orders.done') }}</span>
                     <span class="btn btn-info btn-sm mt-1" onclick="process({{ $order->id }})">{{ __('orders.process') }}</span>
+                    <span class="btn btn-danger btn-sm mt-1" onclick="deleteOrder({{ $order->id }})">{{ __('orders.delete') }}</span>
                   </div>
                 </div>
               </td>

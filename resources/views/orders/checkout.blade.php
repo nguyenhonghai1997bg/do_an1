@@ -28,6 +28,9 @@
           <div class="alert alert-danger">{{ $error }}</div>
         @endforeach
       @endif
+      @if(session('warning'))
+          <div class="alert alert-warning">{{ session('warning') }}</div>
+      @endif
         {{ Form::open(['route' => 'orders.store', 'id' => 'checkout-form', 'class' => 'clearfix']) }}
         <div class="col-md-6">
           <div class="billing-details">
@@ -49,18 +52,6 @@
             <div class="form-group">
               <input class="input" type="tel" name="phone" placeholder="Telephone" value="{{ Auth::user() ? Auth::user()->phone ?? '' : '' }}">
             </div>
-            @if(!Auth::check())
-              <div class="form-group">
-                <div class="input-checkbox">
-                  <input type="checkbox" id="register">
-                  <label class="font-weak" for="register">Create Account?</label>
-                  <div class="caption">
-                      <p>
-                        <input class="input" type="password" name="password" placeholder="Enter Your Password">
-                  </div>
-                </div>
-              </div>
-            @endif
           </div>
         </div>
 

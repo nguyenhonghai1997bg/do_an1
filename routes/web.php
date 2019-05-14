@@ -17,7 +17,7 @@
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
-
+Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('users.logout');
 Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
     Route::resource('reviews', 'ReviewController');
@@ -33,14 +33,17 @@ Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
     Route::get('orders/list/deleted', 'OrderController@listOrderByUserDeleted')->middleware('auth')->name('users.show.list-order-deleted');
     Route::get('orders/{id}/detail', 'OrderController@detailOrder')->middleware('auth')->name('users.orders.detail');
     Route::delete('orders/{id}/destroy', 'OrderController@destroy')->middleware('auth')->name('users.orders.delete');
+    Route::get('products/sales', 'ProductController@listSale')->name('products.sale');
 
     Route::get('category/products/', 'ProductController@search')->name('users.search');
     Route::get('products/search-by-price', 'ProductController@searchByPrice');
+    Route::post('notifies/seen/{id}', 'Admin/NotifyController@seen');
+    Route::get('notifies/users', 'NotifyController@allNotifies')->name('users.allNotifies');
 
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('admin.home');
     Route::group(['prefix' => 'manager'], function(){
         Route::resources([
             'catalogs' => 'CatalogController',
@@ -59,14 +62,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale
         Route::post('orders/do/done', 'OrderController@orderDone');
         Route::post('orders/do/waiting', 'OrderController@orderWaiting');
         Route::post('orders/do/process', 'OrderController@orderProcess');
+        Route::delete('orders/{id}/destroy', 'OrderController@orderDestroy');
         Route::delete('images/{id}/destroy', 'ImageController@destroy');
         Route::post('products/{id}/change-status', 'ProductController@changeStatus');
+
+        Route::get('all-orders-done', 'OrderController@getAllOrdersDone');
+        Route::get('count-order', 'OrderController@getDataDoughnut');
     });
     Route::group(['prefix' => 'setting'], function(){
         Route::resources([
             'roles' => 'RoleController',
             'users' => 'UserController',
         ]);
+        Route::get('list-new-users', 'UserController@listNewUsers')->name('users.listNewUsers');
     });
 });
 

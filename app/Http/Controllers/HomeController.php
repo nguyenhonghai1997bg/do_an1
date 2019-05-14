@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
+
 
 class HomeController extends Controller
 {
     protected $productRepository;
+    protected $categoryRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ProductRepositoryInterface $product)
+    public function __construct(ProductRepositoryInterface $product, CategoryRepositoryInterface $category)
     {
         $this->productRepository = $product;
+        $this->categoryRepository = $category;
     }
 
     /**
