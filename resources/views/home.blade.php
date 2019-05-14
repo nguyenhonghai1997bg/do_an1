@@ -54,49 +54,6 @@
     <!-- /HOME -->
 
     <!-- section -->
-    <div class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src=" {{ asset('users/img/banner10.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src=" {{ asset('users/img/banner11.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-
-                <!-- banner -->
-                <div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
-                    <a class="banner banner-1" href="#">
-                        <img src=" {{ asset('users/img/banner12.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
     <!-- /section -->
 
     <!-- section -->
@@ -121,8 +78,8 @@
                     <div class="banner banner-2">
                         <img src=" {{ asset('users/img/banner14.jpg') }}" alt="">
                         <div class="banner-caption">
-                            <h2 class="white-color">NEW<br>COLLECTION</h2>
-                            <button class="primary-btn">Shop Now</button>
+                            <h2 class="white-color">{{ __('products.saleList') }}</h2>
+                            <a href="{{ route('products.sale') }}" class="primary-btn">{{ __('app.shopNow') }}</a>
                         </div>
                     </div>
                 </div>
@@ -246,52 +203,6 @@
     <!-- /section -->
 
     <!-- section -->
-    <div class="section section-grey">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <!-- banner -->
-                <div class="col-md-8">
-                    <div class="banner banner-1">
-                        <img src=" {{ asset('users/img/banner13.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
-                            <button class="primary-btn">Shop Now</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- /banner -->
-
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src=" {{ asset('users/img/banner11.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-
-                <!-- banner -->
-                <div class="col-md-4 col-sm-6">
-                    <a class="banner banner-1" href="#">
-                        <img src=" {{ asset('users/img/banner12.jpg') }}" alt="">
-                        <div class="banner-caption text-center">
-                            <h2 class="white-color">NEW COLLECTION</h2>
-                        </div>
-                    </a>
-                </div>
-                <!-- /banner -->
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
-    </div>
-    <!-- /section -->
-
-    <!-- section -->
     <div class="section">
         <!-- container -->
         <div class="container">
@@ -405,7 +316,6 @@
         </div>
         <!-- /container -->
     </div>
-
 <script type="text/javascript">
 
     $('.hethang').click(function () {

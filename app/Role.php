@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     const PERPAGE = 15;
+    const USER_ROLE = 1;
     protected $fillable = [
         'name',
         'slug'

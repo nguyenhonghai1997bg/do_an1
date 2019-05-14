@@ -67,14 +67,14 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', __('users.created'));
     }
 
-    public function show(){
+    public function listNewUsers()
+    {
+        $users = $this->userRepository->listNewUsers();
 
+        return view('admin.users.new', compact('users'));
     }
 
-    // public function searchUsers($key)
-    // {
-    //     $users = $this->userRepository->searchUsers($key);
-
-    //     return $users;
-    // }
+    public function show()
+    {
+    }
 }

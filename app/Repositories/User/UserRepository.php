@@ -32,4 +32,19 @@ class UserRepository extends RepositoryEloquent implements UserRepositoryInterfa
             return $this->model->where('name', 'like', '%' . $key . '%')->orWhere('email', 'like', '%' . $key . '%')->orWhere('phone', 'like', '%' . $key . '%')->orderBy('id', 'DESC')->paginate($this->perPage);
         }
     }
+
+    public function newUsersInMonth()
+    {
+        $currentMonth = \Carbon\Carbon::now()->month;
+
+        return $this->model->where(\DB::raw('MONTH(created_at)'), $currentMonth)->count();
+    }
+
+    public function listNewUsers()
+    {
+        $currentMonth = \Carbon\Carbon::now()->month;
+        $currentYear = \Carbon\Carbon::now()->year;
+
+        return $this->model->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->paginate($this->perPage);
+    }
 }

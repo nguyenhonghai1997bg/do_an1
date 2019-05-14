@@ -137,12 +137,12 @@
                           <div><a href="#"><i class="fa fa-user-o"></i>{{ $review->user->name }}</a></div>
                           <div>
                             <a href="#"><i class="fa fa-clock-o"></i>{{ $review->created_at }}</a>
-                              @if(Auth::user()->id == $review->user->id)
+                              @if(Auth::user() && Auth::user()->id == $review->user->id)
                                 <a href="#" class="mt-2 ml-5" onclick="showModalEditReview({{ $review->id }}, {{ $review->product_id }}, '{{ $review->content }}', {{ $review->rating }})">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>
                               @endif
-                            @if(Auth::user()->id == $review->user->id)
+                            @if(Auth::user() && Auth::user()->id == $review->user->id)
                               <a href="#" class="mt-2 ml-5" onclick="deleteReview('{{ __('reviews.delete') }}','{{ __('app.confirm') }}', {{ $review->id }})">
                                   <i class="fa fa-trash" aria-hidden="true"></i>
                               </a>
@@ -270,7 +270,7 @@
   </div>
   <!-- /container -->
 </div>
-
+@if(AUth::check())
 <div class="modal fade" id="edit-review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -315,6 +315,7 @@
     </div>
   </div>
 </div>
+@endif
 <script type="text/javascript">
    $('.hethang').click(function () {
         alertify.warning('{{ __('app.hethangroi') }}')
