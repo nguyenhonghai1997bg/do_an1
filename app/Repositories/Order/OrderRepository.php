@@ -183,4 +183,9 @@ class OrderRepository extends RepositoryEloquent implements OrderRepositoryInter
 
         return $this->model->isNotDelete()->select(\DB::raw('sum(total) as money'))->where('status', $this->model::DONE)->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->groupBy(\DB::raw('MONTH(created_at)'))->first();
     }
+
+    public function ordersDoneDownload()
+    {
+        return $this->model->isNotDelete()->where('status', $this->model::DONE)->get()->toArray();
+    }
 }

@@ -29,6 +29,8 @@
     <link type="text/css" rel="stylesheet" href="{{  asset('users/css/style.css') }}" />
     <script src="{{ asset('users/js/jquery.min.js') }}"></script>
     <script src="{{ asset('users/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 </head>
 <script type="text/javascript">
   $.ajaxSetup({

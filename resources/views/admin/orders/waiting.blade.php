@@ -66,7 +66,7 @@
                   <div class="row">
                     <span class="btn btn-success btn-sm mt-1" onclick="done({{ $order->id }})">{{ __('orders.done') }}</span>
                     <span class="btn btn-info btn-sm mt-1" onclick="process({{ $order->id }})">{{ __('orders.process') }}</span>
-                    <span class="btn btn-danger btn-sm mt-1" onclick="deleteOrder({{ $order->id }})">{{ __('orders.delete') }}</span>
+                    <span class="btn btn-danger btn-sm mt-1" onclick="deleteOrder('{{ __('orders.delete') }}','{{ __('app.confirm') }}', {{ $order->id }})">{{ __('orders.delete') }}</span>
                   </div>
                 </div>
               </td>

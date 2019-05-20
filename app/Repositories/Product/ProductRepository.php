@@ -129,14 +129,14 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
     //frontend
     public function latestProducts()
     {
-        $products = $this->model->active()->orderBy('id', 'DESC')->limit($this->pageUser)->get();
+        $products = $this->model->active()->orderBy('id', 'DESC')->limit(4)->get();
 
         return $products;
     }
 
     public function topviewtProducts()
     {
-        $products = $this->model->active()->orderBy('view', 'DESC')->limit($this->pageUser)->get();
+        $products = $this->model->active()->orderBy('view', 'DESC')->limit(4)->get();
 
         return $products;
     }
@@ -160,7 +160,7 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
     public function topOrders()
     {
         $list = [];
-        $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->limit($this->pageUser)->get()->toArray();
+        $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->limit(4)->get()->toArray();
         foreach($top as $item) {
             $list[] = $this->model->find($item['product_id']);
         }

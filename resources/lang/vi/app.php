@@ -23,5 +23,14 @@
         'quickView' => 'Xem nhanh',
         'forYou' => 'Có thể bạn tìm',
         'notFoudModel' => 'Không tìm thấy bản ghi :id',
+        'ordersWaiting' => 'Đơn hàng đang chờ',
+        'ordersProcess' => 'Đơn hàng đang xử lý',
+        'ordersDone' => 'Đơn hàng đã xử lý xong',
+        'orderDeleted' => 'Đơn hàng đã bị xóa',
+        'orderWaiting' => 'Đơn hàng đang chờ',
+        'moreInfor' => 'Thông tin chi tiết',
+        'shopNow' => 'Mua hàng',
+        'myCart' => 'Giỏ hàng',
+        'viewAll' => 'Xem tất cả'
     ];
 ?>
