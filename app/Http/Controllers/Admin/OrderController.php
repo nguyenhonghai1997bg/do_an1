@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\DetailOrder;
+use App\Exports\OrderExport;
 
 class OrderController extends Controller
 {
@@ -111,12 +112,17 @@ class OrderController extends Controller
     }
 
 
-
     public function getDataDoughnut(Request $request)
     {
         $orders = $this->orderRepository->getDataDoughnut($request->year);
         
         return $orders;
     }
+
+    public function downloadExcel($type)
+    {
+        return \Excel::download(new OrderExport, 'order' . date('Y-m-d H:i:s') . '.' . $type);
+    }
+
 
 }

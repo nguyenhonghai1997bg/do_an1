@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\DetailOrder;
+use Twilio\Rest\Client;
 
 class OrderController extends Controller
 {
@@ -54,6 +55,20 @@ class OrderController extends Controller
                 'notify' => __('orders.success'),
             ]);
             event(new \App\Events\OrderEvent(__('orders.success'), $link, $order, $notify->id));
+            $sendToPhone = '+84' . substr($order->phone, 1, 9);
+            $account_sid = 'AC48892300f8a8224ced9a1332fc3ffa8c';
+            $auth_token = '2e39fee797e0626906bb3d80a4f0e438';
+            $twilio_number = "+14044452121";
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create(
+                // Where to send a text message (your cell phone?)
+                "$sendToPhone",
+                array(
+                    'from' => $twilio_number,
+                    'body' => __('orders.success')
+                )
+            );
+
             \DB::commit();
             $order = $order->with(['detailOrders'])->first();
 
@@ -93,6 +108,7 @@ class OrderController extends Controller
             'notify' => __('orders.deletedOrder'),
         ]);
         event(new \App\Events\OrderEvent(__('orders.deletedOrder'), $link, $order, $notify->id));
+
         return $order;
     }
 

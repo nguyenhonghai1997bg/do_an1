@@ -159,6 +159,7 @@
     <!-- container -->
 </header>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.5/push.js"></script>
 
 @if(Auth::check())
 <script type="text/javascript">
@@ -172,11 +173,20 @@
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('App\\Events\\OrderByAdminEvent', function(data) {
-        console.log(data)
         $('#notify-user-list').prepend('<a href="' + data.link + '" class="mt-2" onclick="seen(' + data.notify_id + ')"><div>' + data.notify + '</div></a>')
             
         var countNotify = parseInt($('#count-notifies').text());
+        console.log(data)
         $('#count-notifies').text(countNotify + 1)
+        Push.create(data.notify, {
+            body: data.notify,
+            icon: "{{ asset('images/logo.jpg') }}",
+            timeout: 5000,
+            onClick: function() {
+                window.focus();
+                window.location.href = data.link
+            }
+          });
         alertify.success(data.notify)
     });
     function seen(id) {

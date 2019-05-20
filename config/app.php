@@ -177,6 +177,9 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+
 
         App\Providers\RepositoryServiceProvider::class,
 
@@ -235,6 +238,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'IMG' => Intervention\Image\Facades\Image::class,
         'Pusher' => Pusher\Pusher::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

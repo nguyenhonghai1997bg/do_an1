@@ -37,7 +37,7 @@ Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
 
     Route::get('category/products/', 'ProductController@search')->name('users.search');
     Route::get('products/search-by-price', 'ProductController@searchByPrice');
-    Route::post('notifies/seen/{id}', 'Admin/NotifyController@seen');
+    Route::post('notifies/seen/{id}', 'Admin\NotifyController@seen');
     Route::get('notifies/users', 'NotifyController@allNotifies')->name('users.allNotifies');
 
 });
@@ -68,6 +68,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale
 
         Route::get('all-orders-done', 'OrderController@getAllOrdersDone');
         Route::get('count-order', 'OrderController@getDataDoughnut');
+
+        Route::get('downloadExcel/{type}', 'OrderController@downloadExcel');
     });
     Route::group(['prefix' => 'setting'], function(){
         Route::resources([

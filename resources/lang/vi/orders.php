@@ -10,6 +10,22 @@
 		'name' => 'Tên người nhận',
 		'id' => 'ID',
 		'address' => 'Địa chỉ',
-		'listOrdersDeleted' => 'Danh sách các đơn hàng đã bị xóa'
+		'listOrdersDeleted' => 'Danh sách các đơn hàng đã bị xóa',
+		'listWaiting' => 'Đơn hàng đang chờ',
+		'delete' => 'Xóa',
+		'listProcess' => 'Đơn hàng đang xử lý',
+		'listDone' => 'Các đơn hàng đã giao',
+		'listDeleted' => 'Các đơn hàng đã bị xóa',
+		'deleted_at' => 'Xóa lúc',
+		'deleted_by' => 'Xóa bởi',
+		'email' => 'Email',
+		'total' => 'Tổng tiền',
+		'phone' => 'Điện thoại',
+		'paymethod' => 'Phương thức thanh toán',
+		'created_at' => 'Tạo lúc',
+        'amoutCurrentMonth' => 'Tổng tiền thu được trong tháng',
+        'chartOrders' => 'Thống kê doanh thu',
+        'doing' => 'Thống kê trạng thái đơn hàng',
+        'year' => 'Năm'
 	];
 ?>

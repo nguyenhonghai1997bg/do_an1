@@ -37,6 +37,9 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body table-responsive p-0">
+    <a href="{{ url('admin/manager/downloadExcel/xls') }}"><button class="btn btn-success">Download Excel xls</button></a>
+    <a href="{{ url('admin/manager/downloadExcel/xlsx') }}"><button class="btn btn-success">Download Excel xlsx</button></a>
+    <a href="{{ url('admin/manager/downloadExcel/csv') }}"><button class="btn btn-success">Download CSV</button></a>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -44,7 +47,6 @@
           <th>{{ __('orders.name') }}</th>
           <th>{{ __('orders.price') }}</th>
           <th>{{ __('orders.detail') }}</th>
-          <th width="10%">{{ __('app.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -59,14 +61,6 @@
               <td id="name-{{ $order->user->id }}">{{ $order->user->name }}</td>
               <td>{{ number_format($order->total) }} VND</td>
               <th><a href="{{ route('admin.orders.show', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
-              <td>
-                <div class="form-group">
-                  <div class="row">
-                    <span class="btn btn-info btn-sm mt-1" onclick="process({{ $order->id }})">{{ __('orders.process') }}</span>
-                    <span class="btn btn-warning btn-sm mt-1" onclick="waiting({{ $order->id }})">{{ __('orders.waiting') }}</span>
-                  </div>
-                </div>
-              </td>
             </tr>
           @endforeach
         @endif

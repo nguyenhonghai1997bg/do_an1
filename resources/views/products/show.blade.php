@@ -160,13 +160,14 @@
                       </div>
 
                       @endforeach
-
-                      <ul class="reviews-pages">
+                      {{-- @for($page = $review->) --}}
+                      {{ $reviews->firstItem() }}
+                      {{-- <ul class="reviews-pages">
                         <li class="active">1</li>
                         <li><a href="#">2</a></li>
                         <li><a href="#">3</a></li>
                         <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-                      </ul>
+                      </ul> --}}
                     </div>
                   </div>
                   <div class="col-md-6">
