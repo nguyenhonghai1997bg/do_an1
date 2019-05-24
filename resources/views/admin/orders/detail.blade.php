@@ -16,6 +16,8 @@
           <div><b>{{ __('orders.phone') }}:</b> {{ $order->phone }}</div>
           <div><b>{{ __('orders.paymethod') }}:</b> {{ $order->paymethod->name }}</div>
           <div><b>{{ __('orders.total') }}:</b> {{ number_format($order->total) }} VND</div>
+          <div><b>{{ __('orders.subtotal') }}: </b><span id="subtotal"></span></div>
+          <div><b>{{ __('orders.totalShip') }}: </b><span id="totalShip"></span></div>
           <div><b>{{ __('orders.created_at') }}:</b> {{ $order->created_at }}</div>
            @if($order->deleted_at)
             <div><b>{{ __('orders.delted_by') }}:</b>
@@ -40,16 +42,16 @@
             @endif
           </div>
           @if($order->deleted_at)
-            <span>{{ Form::button(__('order.deleted'), ['id' => 'danger', 'class' => 'btn btn-danger btn-sm mt-1', 'id' => 'perform1']) }}</span>
+            <span>{{ Form::button(__('orders.deleted'), ['id' => 'danger', 'class' => 'btn btn-danger btn-sm mt-1', 'id' => 'perform1']) }}</span>
             @else
               @if($order->status > 0 && $order->status != 2)
-                <span>{{ Form::button(__('order.waiting'), ['id' => 'waiting', 'class' => 'btn btn-warning btn-sm mt-1', 'onclick' => "waiting($order->id)", 'id' => 'perform1']) }}</span>
+                <span>{{ Form::button(__('orders.waiting'), ['id' => 'waiting', 'class' => 'btn btn-warning btn-sm mt-1', 'onclick' => "waiting($order->id)", 'id' => 'perform1']) }}</span>
               @endif
               @if($order->status < 1)
-                <span>{{ Form::button(__('order.process'), ['id' => 'process', 'class' => 'btn btn-warning btn-sm mt-1', 'onclick' => "process($order->id)", 'id' => 'perform1']) }}</span>
+                <span>{{ Form::button(__('orders.process'), ['id' => 'process', 'class' => 'btn btn-warning btn-sm mt-1', 'onclick' => "process($order->id)", 'id' => 'perform1']) }}</span>
               @endif
               @if($order->status < 2)
-                <span>{{ Form::button(__('order.done'), ['id' => 'done', 'class' => 'btn btn-success btn-sm mt-1', 'onclick' => "done($order->id)", 'id' => 'perform2']) }}</span>
+                <span>{{ Form::button(__('orders.done'), ['id' => 'done', 'class' => 'btn btn-success btn-sm mt-1', 'onclick' => "done($order->id)", 'id' => 'perform2']) }}</span>
               @endif
             @endif
         </div>
@@ -74,6 +76,7 @@
     </div>
     </div>
     <!-- /.card-header -->
+    <?php $subtotal = 0; ?>
     <div class="card-body table-responsive p-0">
     <table class="table table-hover">
       <thead>
@@ -82,6 +85,7 @@
           <th>{{ __('detailOrders.name') }}</th>
           <th>{{ __('detailOrders.price') }}</th>
           <th>{{ __('detailOrders.quantity') }}</th>
+          <th>{{ __('detailOrders.total') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -96,8 +100,14 @@
               <td id="name-{{ $detail->product->id }}">{{ $detail->product->name }}</td>
               <td>{{ number_format($detail->price) }}</td>
               <td>{{ $detail->quantity }}</td>
+              <td>{{ number_format($detail->quantity * $detail->price) }}</td>
+              <?php $subtotal += $detail->quantity * $detail->price; ?>
             </tr>
           @endforeach
+          <script>
+            $('#subtotal').text('{{ number_format($subtotal) }} VND')
+            $('#totalShip').text('{{ number_format($order->total - $subtotal)}} VND')
+          </script>
         @endif
       </tbody>
     </table>

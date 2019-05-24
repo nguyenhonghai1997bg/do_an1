@@ -35,6 +35,11 @@
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
         'Accout' => 'Tài khoản',
-        'logout' => 'Đăng xuất'
+        'logout' => 'Đăng xuất',
+        'loginToComment' => 'Đăng nhập để bình luận',
+        'hethang' => 'Hết hàng',
+        'hethangroi' => 'Sản phẩm đã hết hàng',
+        'search' => 'Tìm kiếm',
+        'welcome' => 'Chào mừng bạn đến với Masha Life!'
     ];
 ?>

@@ -22,6 +22,8 @@
         'topSale' => 'Top khuyến mãi',
         'topView' => 'Sản phẩm có nhiều lượt xem',
         'latestProduct' => 'Sản phẩm mới nhất',
-        'topOrders' => 'Mua nhiều nhất'
+        'topOrders' => 'Mua nhiều nhất',
+        'view' => 'Lượt xem',
+        'showImage' => 'Xem hình ảnh'
     ];
 ?>

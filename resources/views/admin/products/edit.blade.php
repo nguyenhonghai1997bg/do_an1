@@ -99,7 +99,7 @@
           <select class="form-control" name="category_id">
             <option selected value="">-- {{ __('products.categories') }} --</option>
             @foreach($categories as $category)
-              <option value="{{ $category->id }}" @if($product->category->id == $category->id) selected @endif >{{ $category->name }}</option>
+              <option value="{{ $category->id }}" @if($product->category->id == $category->id) selected @endif >{{ $category->name . ' ' . $category->catalog->name }}</option>
             @endforeach
           </select>
         </div>

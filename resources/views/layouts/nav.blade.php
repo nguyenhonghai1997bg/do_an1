@@ -4,7 +4,7 @@
 		<div id="responsive-nav">
 			<!-- category nav -->
 			<div class="category-nav">
-				<span class="category-header">Categories <i class="fa fa-list"></i></span>
+				<span class="category-header">{{ __('app.categories') }} <i class="fa fa-list"></i></span>
 				<ul class="category-list">
 					@foreach($categories2 as $category)
 					<li><a href="{{ url("products/search-by-price?category_id=$category->id") }}">{{ $category->name . ' ' . $category->catalog->name }}</a></li>

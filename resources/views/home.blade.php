@@ -337,7 +337,7 @@
           $('#cart-' + data.rowId).hide();
           var html = `<div class="product product-widget" id="cart-${data.rowId}">
               <div class="product-thumb">
-                  <img src="${data.options.image_url}" alt="">
+                  <img src="{{ asset('images/products/')}}/${data.options.image_url}" alt="">
               </div>
               <div class="product-body">
                   <h3 class="product-price">${data.price} <span class="qty">x${data.qty}</span></h3>

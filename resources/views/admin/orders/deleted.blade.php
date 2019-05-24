@@ -47,7 +47,7 @@
           @foreach($orders as $key => $order)
             <tr id="column-{{ $order->id }}">
               <td>{{ app('request')->input('page') ? \App\Order::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
-              <td id="name-{{ $order->user->id }}">{{ $order->user->name }}</td>
+              <td id="name-{{ $order->user_id ? $order->user->id : '' }}">{{ $order->name }}</td>
               <td>{{ number_format($order->total) }} VND</td>
               <th><a href="{{ route('admin.orders.show', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
               <td>{{ $order->deleted_at }}</td>

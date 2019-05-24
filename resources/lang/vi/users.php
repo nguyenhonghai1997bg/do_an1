@@ -11,6 +11,8 @@
         'profile' => 'Profile',
         'listOrders' => 'Danh sách đơn hàng',
         'logout' => 'Đăng xuất',
-        'login' => 'Đăng nhập'
+        'login' => 'Đăng nhập',
+        'register' => 'Đăng ký',
+        'remember' => 'Nhớ tài khoản',
     ];
 ?>

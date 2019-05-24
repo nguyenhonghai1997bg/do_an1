@@ -33,14 +33,14 @@ class ProductController extends Controller
         } else {
             $products = $this->productRepository->orderBy('id', 'DESC')->paginate($this->productRepository->perPage);
         }
-        $categories = $this->categoryRepository->all(['id', 'name']);
+        $categories = $this->categoryRepository->with('catalog')->get();
 
         return view('admin.products.index', compact('products', 'key', 'categories', 'category_id'));
     }
 
     public function create()
     {
-        $categories = $this->categoryRepository->all(['id', 'name']);
+        $categories = $this->categoryRepository->with('catalog')->get();
 
         return view('admin.products.create', compact('categories'));
     }
@@ -68,9 +68,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->productRepository->with(['images', 'sale', 'warehouse'])->findOrFail($id);
-        $categories = $this->categoryRepository->all(['id', 'name']);
+        $categories = $this->categoryRepository->with('catalog')->get();
 
-        return view('admin.products.edit', compact('product', 'categories', 'currentImages'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     public function update(UpdateProductRequest $request, $id)

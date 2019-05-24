@@ -12,7 +12,7 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('app.home') }}</a></li>
           <li class="breadcrumb-item active">{{ __('roles.lists') }}</li>
         </ol>
       </div>
@@ -63,7 +63,7 @@
                   <div class="row">
                     <a class="text-primary fa fa-edit ml-2" id="edit-icon" onclick="showModalEdit({{ $role->id }})" ></a>
                     {{-- <a href="{{ route('roles.edit', ['id' => $role->id]) }}" class="fa fa-edit"></a> --}}
-                    <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('role.delete') }}','{{ __('app.confirm') }}', {{ $role->id }})"></a>
+                    <a href="#" class="fa fa-trash ml-2" onclick="deleteConfirm('{{ __('roles.delete') }}','{{ __('app.confirm') }}', {{ $role->id }})"></a>
                   </div>
                 </div>
               </td>
