@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AuthAdmin
+class AuthUser
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class AuthAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (\Auth::user() && \Auth::user()->role_id == 1) {
-            return redirect()->route('home');
+        if (\Auth::user() && \Auth::user()->role_id > 1) {
+            return redirect()->route('admin.home');
         }
 
         return $next($request);

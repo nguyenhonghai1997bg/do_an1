@@ -10,6 +10,7 @@
         'listNewusers' => 'Danh sách người dùng mới',
         'profile' => 'Profile',
         'listOrders' => 'Danh sách đơn hàng',
-        'logout' => 'Đăng xuất'
+        'logout' => 'Đăng xuất',
+        'login' => 'Đăng nhập'
     ];
 ?>

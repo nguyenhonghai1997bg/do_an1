@@ -15,10 +15,10 @@
 
 
 Auth::routes();
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home')->middleware('authUser');
+Route::get('/home', 'HomeController@index')->middleware('authUser');
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('users.logout');
-Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
+Route::group(['prefix' => '/', 'middleware' => ['authUser', 'locale']], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
     Route::resource('reviews', 'ReviewController');
     // cart
@@ -42,7 +42,7 @@ Route::group(['prefix' => '/', 'middleware' => 'locale'], function() {
 
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
     Route::get('/', 'HomeController@index')->name('admin.home');
     Route::group(['prefix' => 'manager'], function(){
         Route::resources([

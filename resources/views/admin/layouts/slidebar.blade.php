@@ -104,31 +104,38 @@
             </li>
           </ul>
         </li>
+        @if(Auth::user()->can('view', Auth::user()))
+          <li class="nav-item has-treeview {{ (request()->segment(2) == 'setting') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ (request()->segment(2) == 'setting') ? 'active' : '' }}">
+              <i class="nav-icon fa fa-pie-chart"></i>
+              <p>
+                {{ __('app.setting') }}
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('roles.index') }}" class="nav-link {{ (request()->segment(3) === 'roles') ? 'active' : '' }}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>{{ __('app.roles') }}</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link {{ (request()->segment(3) === 'users') ? 'active' : '' }}">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>{{ __('app.users') }}</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        @endif
 
-
-        <li class="nav-item has-treeview {{ (request()->segment(2) == 'setting') ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link {{ (request()->segment(2) == 'setting') ? 'active' : '' }}">
-            <i class="nav-icon fa fa-pie-chart"></i>
-            <p>
-              {{ __('app.setting') }}
-              <i class="right fa fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('roles.index') }}" class="nav-link {{ (request()->segment(3) === 'roles') ? 'active' : '' }}">
+        <li class="nav-item">
+              <a href="{{ route('logout') }}" class="nav-link">
                 <i class="fa fa-circle-o nav-icon"></i>
-                <p>{{ __('app.roles') }}</p>
+                <p>{{ __('app.logout') }}</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ route('users.index') }}" class="nav-link {{ (request()->segment(3) === 'users') ? 'active' : '' }}">
-                <i class="fa fa-circle-o nav-icon"></i>
-                <p>{{ __('app.users') }}</p>
-              </a>
-            </li>
-          </ul>
-        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

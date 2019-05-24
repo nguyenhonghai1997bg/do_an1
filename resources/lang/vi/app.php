@@ -8,7 +8,7 @@
         'users' => 'Người dùng',
         'new' => 'Thêm mới',
         'home' => 'Trang chủ',
-        'action' => 'Action',
+        'action' => 'Hoạt động',
         'close' => 'Đóng',
         'save' => 'Lưu lại',
         'add' => 'Thêm mới',
@@ -31,6 +31,10 @@
         'moreInfor' => 'Thông tin chi tiết',
         'shopNow' => 'Mua hàng',
         'myCart' => 'Giỏ hàng',
-        'viewAll' => 'Xem tất cả'
+        'viewAll' => 'Xem tất cả',
+        'login' => 'Đăng nhập',
+        'register' => 'Đăng ký',
+        'Accout' => 'Tài khoản',
+        'logout' => 'Đăng xuất'
     ];
 ?>

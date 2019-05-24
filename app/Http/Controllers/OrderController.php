@@ -55,19 +55,19 @@ class OrderController extends Controller
                 'notify' => __('orders.success'),
             ]);
             event(new \App\Events\OrderEvent(__('orders.success'), $link, $order, $notify->id));
-            $sendToPhone = '+84' . substr($order->phone, 1, 9);
-            $account_sid = 'AC48892300f8a8224ced9a1332fc3ffa8c';
-            $auth_token = '2e39fee797e0626906bb3d80a4f0e438';
-            $twilio_number = "+14044452121";
-            $client = new Client($account_sid, $auth_token);
-            $client->messages->create(
-                // Where to send a text message (your cell phone?)
-                "$sendToPhone",
-                array(
-                    'from' => $twilio_number,
-                    'body' => __('orders.success')
-                )
-            );
+            // $sendToPhone = '+84' . substr($order->phone, 1, 9);
+            // $account_sid = 'AC48892300f8a8224ced9a1332fc3ffa8c';
+            // $auth_token = '2e39fee797e0626906bb3d80a4f0e438';
+            // $twilio_number = "+14044452121";
+            // $client = new Client($account_sid, $auth_token);
+            // $client->messages->create(
+            //     // Where to send a text message (your cell phone?)
+            //     "+84392660985",
+            //     array(
+            //         'from' => $twilio_number,
+            //         'body' => __('orders.success')
+            //     )
+            // );
 
             \DB::commit();
             $order = $order->with(['detailOrders'])->first();

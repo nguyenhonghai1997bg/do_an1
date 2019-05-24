@@ -26,6 +26,7 @@
         'amoutCurrentMonth' => 'Tổng tiền thu được trong tháng',
         'chartOrders' => 'Thống kê doanh thu',
         'doing' => 'Thống kê trạng thái đơn hàng',
-        'year' => 'Năm'
+        'year' => 'Năm',
+        'order' => 'Đặt hàng'
 	];
 ?>
