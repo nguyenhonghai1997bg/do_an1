@@ -56,3 +56,44 @@ function updateCart(rowId) {
     }
   })
 }
+
+$('#address-order').change(function(){
+  console.log($(this).val());
+  var destinations = $(this).val();
+  var request = 'https://maps.googleapis.com/maps/api/distancematrix/json?&origins=dai-hoc-tai-nguyen-va-moi-truong-ha-noi&destinations=' + destinations + '&key=AIzaSyC08YIQaMRFrkprEUy7rkd4dM6-4HJTzZ0';
+  $.ajax({
+    url: 'https://cors-anywhere.herokuapp.com/' + request,
+    cache: false,
+    method: 'GET',
+    success: function (data) {
+      var tien = 0;
+      if (data.rows[0].elements[0].status != "OK") {
+        $('#err-address').text('Địa điểm không xác định');
+        $('#ship').val(-1)
+        $('#km').text('')
+        $('#money-ship').text('0')
+        return;
+      }
+      $('#err-address').text('');
+      var m = data.rows[0].elements[0].distance.value;
+      if (m < 1000) {
+          tien = 0;
+      } else if( m >= 1000 && m <= 5000) {
+          tien = (m/1000) * 5000;
+      } else if(m > 5000 && m <= 10000) {
+          tien = 25000 + (((m - 5000)/1000) * 10000);
+      } else if (m > 10000) {
+          tien = 25000 + 50000 + (((m - 10000)/1000) * 15000);
+      }
+      console.log('tien= ' + tien)
+      $('#ship').val(tien)
+      $('#km').text(data.rows[0].elements[0].distance.text)
+      $('#money-ship').text(tien)
+    },
+    error: function(error) {
+      console.log(error)
+    }
+  })
+})
+
+  

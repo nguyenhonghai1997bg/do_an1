@@ -4,7 +4,7 @@
     <div id="top-header">
         <div class="container">
             <div class="pull-left">
-                <span>Welcome to Masha life shop!</span>
+            <span>{{ __('app.welcome') }}</span>
             </div>
             <div class="pull-right">
                 <ul class="header-top-links">
@@ -37,9 +37,9 @@
                 <!-- Search -->
                 <div class="header-search">
                     <form action="{{ route('users.search') }}">
-                        <input class="input search-input" type="search" name="key" placeholder="Enter your keyword" id="input-search" value="{{ request('key', '') }}">
+                    <input class="input search-input" type="search" name="key" placeholder="{{ __('app.search') }}" id="input-search" value="{{ request('key', '') }}">
                         <select class="input search-categories" name="category_id">
-                            <option value="0">All Categories</option>
+                        <option value="0">{{ __('categories.allCategories') }}</option>
                             @foreach($categories2 as $category)
                             <option value="{{ $category->id }}" {{ request('category_id', 0) == $category->id ? 'selected' : '' }}>{{ $category->name . ' ' . $category->catalog->name }}</option>
                             @endforeach
@@ -93,14 +93,14 @@
                                     @foreach($carts as $cart)
                                         <div class="product product-widget" id="cart-{{ $cart->rowId }}">
                                             <div class="product-thumb">
-                                                <img src="{{ $cart->options ? $cart->options->image_url : '' }}" alt="">
+                                                <img src="{{ $cart->options ? asset('images/products/' . $cart->options->image_url) : '' }}" alt="">
                                             </div>
                                             <div class="product-body">
                                                 <h3 class="product-price">
                                                     <span id="item-{{ $cart->rowId }}-price">{{ number_format($cart->price) }}</span>
                                                     <span class="qty">x<span id="item-{{ $cart->rowId }}-qty">{{ $cart->qty }}</span></span>
                                                 </h3>
-                                                <h2 class="product-name"><a href="product-page.html">{{ $cart->name }}</a></h2>
+                                                <h2 class="product-name"><a href="#">{{ $cart->name }}</a></h2>
                                             </div>
                                             <button class="cancel-btn" onclick="deleteCart({{ $cart->id }}, '{{ $cart->rowId }}', '{{ __('app.confirm') }}', '{{ __('cart.confirm') }}')"><i class="fa fa-trash"></i></button>
                                         </div>
@@ -108,7 +108,7 @@
                                     @endif
                                 </div>
                                 <div class="shopping-cart-btns">
-                                    <a class="primary-btn" href="{{ route('carts.checkout') }}">{{ __('cart.checkout') }} <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a class="primary-btn" href="{{ route('carts.checkout') }}">{{ __('carts.checkout') }} <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -35,7 +35,7 @@
           <select class="form-control mr-4" name="category" id="categories">
             <option selected value="">-- {{ __('products.category') }} --</option>
             @foreach($categories as $category)
-              <option value="{{ $category->id }}" {{ $category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+              <option value="{{ $category->id }}" {{ $category_id == $category->id ? 'selected' : '' }}>{{ $category->name . ' ' . $category->catalog->name }}</option>
             @endforeach
           </select>
           <input type="text" name="search" class="form-control float-right" placeholder="Search" value="{{ $key ?? '' }}" id="search">

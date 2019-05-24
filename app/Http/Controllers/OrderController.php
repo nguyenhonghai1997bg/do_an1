@@ -21,6 +21,9 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+        if ($request->ship == -1) {
+            return redirect()->back()->with('error', __('orders.address_not_found'));
+        }
         \DB::beginTransaction();
         try {
             $user_id = null;
@@ -28,7 +31,10 @@ class OrderController extends Controller
                 $user_id = \Auth::user()->id;
             }
             $data = $request->all();
-            $data['total'] = \Cart::subtotal(0,'.','');
+            $data['total'] = \Cart::subtotal(0,'.','') + $request->ship;
+            if (isset($data['ship'])) {
+                unset($data['ship']);
+            }
             $data['user_id'] = $user_id;
             $order = $this->orderRepository->create($data);
             $carts = \Cart::content();

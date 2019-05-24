@@ -27,6 +27,13 @@
         'chartOrders' => 'Thống kê doanh thu',
         'doing' => 'Thống kê trạng thái đơn hàng',
         'year' => 'Năm',
-        'order' => 'Đặt hàng'
+		'order' => 'Đặt hàng',
+		'quantity' => 'Số lượng',
+		'ship' => 'Vận chuyển',
+		'address_not_found' => 'Không tìm thấy địa chỉ',
+		'orderDone' => 'Đặt hàng thành công',
+		'success' => 'Đặt hàng thành công',
+		'subtotal' => 'Tiền hàng hóa',
+		'totalShip' => 'Tiền ship'
 	];
 ?>

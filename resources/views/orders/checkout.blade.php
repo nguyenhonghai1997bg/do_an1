@@ -10,8 +10,8 @@
 <div id="breadcrumb">
   <div class="container">
     <ul class="breadcrumb">
-      <li><a href="#">Home</a></li>
-      <li class="active">Checkout</li>
+      <li><a href="#">{{ __('app.home') }}</a></li>
+      <li class="active">{{ __('carts.checkout') }}</li>
     </ul>
   </div>
 </div>
@@ -23,6 +23,9 @@
   <div class="container">
     <!-- row -->
     <div class="row">
+      @if(session('error'))
+      <div class="alert alert-danger">{{ session('error') }}</div>
+      @endif
       @if(count($errors->all()))
         @foreach($errors->all() as $error)
           <div class="alert alert-danger">{{ $error }}</div>
@@ -34,23 +37,27 @@
         {{ Form::open(['route' => 'orders.store', 'id' => 'checkout-form', 'class' => 'clearfix']) }}
         <div class="col-md-6">
           <div class="billing-details">
-            <p>Already a customer ? <a href="#">Login</a></p>
+          @if(!Auth::check())
+            <a href="{{ route('login') }}">{{ __('app.login') }}</a></p>
+          @endif
             <div class="section-title">
-              <h3 class="title">Billing Details</h3>
+              <h3 class="title">{{ __('carts.billing') }}</h3>
             </div>
             <div class="form-group">
             </div>
             <div class="form-group">
-              <input class="input" type="text" name="name" placeholder="Name" value="{{ Auth::user() ? Auth::user()->name : '' }}">
+              <input class="input" type="text" name="name" placeholder="{{ __('users.name') }}" value="{{ Auth::user() ? Auth::user()->name : '' }}">
             </div>
             <div class="form-group">
-              <input class="input" type="email" name="email" placeholder="Email" value="{{ Auth::user() ? Auth::user()->email : '' }}">
+              <input class="input" type="email" name="email" placeholder="{{ __('users.email') }}" value="{{ Auth::user() ? Auth::user()->email : '' }}">
             </div>
             <div class="form-group">
-              <input class="input" type="text" name="address" placeholder="Address" value="{{ Auth::user() ? Auth::user()->address : '' }}">
+              <input class="input" type="text" name="address" id="address-order" placeholder="{{ __('users.address') }}" value="{{ Auth::user() ? Auth::user()->address : '' }}">
+              <div class="text-danger" id="err-address"></div>
+              <input type="hidden" id="ship" value="-1" name="ship">
             </div>
             <div class="form-group">
-              <input class="input" type="tel" name="phone" placeholder="Telephone" value="{{ Auth::user() ? Auth::user()->phone ?? '' : '' }}">
+              <input class="input" type="number" name="phone" placeholder="{{ __('users.phone') }}" value="{{ Auth::user() ? Auth::user()->phone ?? '' : '' }}">
             </div>
           </div>
         </div>
@@ -58,7 +65,7 @@
         <div class="col-md-6">
           <div class="payments-methods">
             <div class="section-title">
-              <h4 class="title">Payments Methods</h4>
+              <h4 class="title">{{ __('app.paymethods') }}</h4>
             </div>
             @foreach(\App\Paymethod::all(['id', 'name']) as $paymethod)
             <div class="input-checkbox">
@@ -89,7 +96,7 @@
                 @if(\Cart::content())
                   @foreach(\Cart::content() as $cart)
                   <tr id="row-{{ $cart->rowId }}">
-                    <td class="thumb"><img src="{{ $cart->options->image_url }}" alt=""></td>
+                    <td class="thumb"><img src="{{ asset('images/products/' . $cart->options->image_url) }}" alt=""></td>
                     <td class="details">
                       <a href="{{ route('frontend.products.show', ['id' => $cart->id, 'slug' => \Str::slug($cart->name, '-')]) }}">{{ $cart->name }}</a>
                     </td>
@@ -108,8 +115,8 @@
               <tfoot>
                 <tr>
                   <th class="empty" colspan="3"></th>
-                  <th>TOTAL</th>
-                  <th colspan="2" class="total" id="total">{{ number_format(\Cart::subtotal(0,'.','')) }}</th>
+                  <th>{{ __('carts.subTotal') }}</th>
+                  <th colspan="2" class="total" id="total">{{ number_format(\Cart::subtotal(0,'.','')) }} + <span id="money-ship">0</span> ({{ __('orders.ship') }} <span id="km"> </span>)</th>
                 </tr>
               </tfoot>
             </table>

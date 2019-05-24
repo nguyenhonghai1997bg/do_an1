@@ -66,6 +66,7 @@
               <a href="#">{{ $countReview }} {{ __('products.review') }}</a>
             </div>
             <p><strong>{{ __('products.status') }}:</strong>@if($product->warehouse->quantity > 0) {{ __('products.stocking') }} @else {{ __('products.outOfStock') }} @endif </p>
+            <div><b>{{ __('products.description') }}:</b></div>
             <p>{{ $product->description }}</p>
             {{-- <div class="product-options">
               <ul class="size-option">

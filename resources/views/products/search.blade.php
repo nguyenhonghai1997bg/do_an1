@@ -10,7 +10,7 @@
             <ul class="breadcrumb">
                 <li><a href="#">{{ __('app.home') }}</a></li>
                 <li><a href="#">{{ request('category_id') ? \App\Category::findOrFail(request('category_id'))->name . ' ' . \App\Category::findOrFail(request('category_id'))->catalog->name : 'all' }}</a></li>
-                <li class="active">Products</li>
+            <li class="active">{{ __('app.products') }}</li>
             </ul>
         </div>
     </div>
@@ -58,12 +58,12 @@
 
                     <!-- aside widget -->
                     <div class="aside">
-                        <h3 class="aside-title">Filter by Price</h3>
+                    <h3 class="aside-title">{{ __('app.search') }}</h3>
                         <div id="price-slider"></div>
                         <input type="hidden" name="" id="value-lower">
                         <input type="hidden" name="" id="value-upper">
                     </div>
-                    <div class="btn btn-success" onclick="search()">Search</div>
+                    <div class="btn btn-success" onclick="search()">{{ __('app.search') }}</div>
                     <!-- aside widget -->
 
                 {{--    <!-- aside widget -->
@@ -126,7 +126,9 @@
                                 <div class="product product-single">
                                     <div class="product-thumb">
                                         <div class="product-label">
+                                            @if($product->sale)
                                             <span class="sale">-{{ $product->sale->sale_price }}%</span>
+                                            @endif
                                         </div>
                                        {{--  <ul class="product-countdown">
                                             <li><span>00 H</span></li>
