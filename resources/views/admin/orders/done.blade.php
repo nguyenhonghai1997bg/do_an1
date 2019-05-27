@@ -46,6 +46,7 @@
           <th>#</th>
           <th>{{ __('orders.name') }}</th>
           <th>{{ __('orders.price') }}</th>
+          <th>{{ __('orders.updated_at') }}</th>
           <th>{{ __('orders.detail') }}</th>
         </tr>
       </thead>
@@ -60,6 +61,7 @@
               <td>{{ app('request')->input('page') ? \App\Order::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
               <td id="name-{{ $order->user_id ? $order->user->id : '' }}">{{ $order->name }}</td>
               <td>{{ number_format($order->total) }} VND</td>
+              <td>{{ $order->updated_at }}</td>
               <th><a href="{{ route('admin.orders.show', ['id' => $order->id]) }}">{{ __('orders.detail') }}</a></th>
             </tr>
           @endforeach

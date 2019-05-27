@@ -1,14 +1,12 @@
-@extends('layouts.master')
-
-@section('content')
-
-<script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
-<link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
-
-<div style="margin-bottom: 30px;">
-@include('layouts.nav-child')
-</div>
-<div class="container" style="margin-bottom: 30px;">
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Đặt hàng thành công</title>
+</head>
+<body>
+	<div>Bạn đã đặt hàng thành công, dưới đây là chi tiết đơn hàng của bạn:</div>
+	<?php $detailOrders = $order->detailOrders; ?>
+	<div class="container" style="margin-bottom: 30px;">
   <div><b>{{ __('orders.name') }}:</b> {{ $order->name }}</div>
   <div><b>{{ __('orders.email') }}:</b> {{ $order->email }}</div>
   <div><b>{{ __('orders.address') }}:</b> {{ $order->address }}</div>
@@ -16,9 +14,6 @@
   <div><b>{{ __('orders.paymethod') }}:</b> {{ $order->paymethod->name }}</div>
   <div><b>{{ __('orders.total') }}:</b> {{ number_format($order->total) }} VND</div>
   <div><b>{{ __('orders.created_at') }}:</b> {{ $order->created_at }}</div>
-  @if ($order->deleted_at)
-    <div><b>{{ __('orders.deleted_by') }}:</b>@if($order->deleted_by) {{ $order->delted_by }}@endif</div>
-  @endif
   <div><b>{{ __('orders.status') }}:</b>
     @if ($order->deleted_at)
       <span class="text-danger">{{ __('orders.deleted') }}</span>
@@ -60,24 +55,9 @@
         @endif
       </tbody>
     </table>
-    <div class="mt-4">
-      {{ $detailOrders->links() }}
-    </div>
   </div>
     <!-- /.card-body -->
 </div>
-  <!-- /.card -->
-  </div>
 
-  <!-- Button trigger modal -->
-<!-- Modal -->
-
-<style type="text/css">
-  body {
-    font-size: 15px;
-  }
-  #edit-icon:hover{
-    cursor: pointer;
-  }
-</style>
-@endsection
+</body>
+</html>

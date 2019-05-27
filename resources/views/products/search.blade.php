@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+@section('title', 'Masha life | Products')
 @section('content')
 
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
@@ -164,7 +165,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                            {{ $products->links() }}
+                            {{ !is_array($products) ? $products->links() : '' }}
                             <!-- /Product Single -->
 
                             <!-- Product Single -->

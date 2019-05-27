@@ -34,6 +34,9 @@
 		'orderDone' => 'Đặt hàng thành công',
 		'success' => 'Đặt hàng thành công',
 		'subtotal' => 'Tiền hàng hóa',
-		'totalShip' => 'Tiền ship'
+		'totalShip' => 'Tiền ship',
+		'doingInCurrentDay' => 'Thống kê các đơn hàng trong ngày',
+		'updated_at' => 'Giao hàng lúc',
+		'error_total_cart' => 'Tổng tiền không được bằng 0'
 	];
 ?>

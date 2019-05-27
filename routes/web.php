@@ -15,8 +15,8 @@
 
 
 Auth::routes();
-Route::get('/', 'HomeController@index')->name('home')->middleware('authUser');
-Route::get('/home', 'HomeController@index')->middleware('authUser');
+Route::get('/', 'HomeController@index')->name('home')->middleware(['authUser', 'locale']);
+Route::get('/home', 'HomeController@index')->middleware(['authUser', 'locale']);
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('users.logout');
 Route::group(['prefix' => '/', 'middleware' => ['authUser', 'locale']], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
@@ -40,10 +40,16 @@ Route::group(['prefix' => '/', 'middleware' => ['authUser', 'locale']], function
     Route::post('notifies/seen/{id}', 'Admin\NotifyController@seen');
     Route::get('notifies/users', 'NotifyController@allNotifies')->name('users.allNotifies');
 
+    Route::get('products/all-top-sale', 'ProductController@allTopSale')->name('allTopSale');
+    Route::get('products/mua-nhieu-nhat', 'ProductController@allTopOrder')->name('allTopOrder');
+
 });
+
+Route::get('/admin/products/{id}/{slug}', 'ProductController@show')->name('backend.products.show');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
     Route::get('/', 'HomeController@index')->name('admin.home');
+
     Route::group(['prefix' => 'manager'], function(){
         Route::resources([
             'catalogs' => 'CatalogController',

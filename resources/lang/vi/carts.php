@@ -11,6 +11,7 @@
 		'updated' => 'Đã cập nhật',
 		'deleted' => 'Đã xóa',
 		'confirm' => 'Xác nhận?',
-		'ordersSuccess' => 'Đặt hàng thành công'
+		'ordersSuccess' => 'Đặt hàng thành công',
+		'orderDone' => 'Đặt hàng thành công'
 	];
 ?>

@@ -7,6 +7,8 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\DetailOrder;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderSuccess;
 
 class OrderController extends Controller
 {
@@ -23,6 +25,9 @@ class OrderController extends Controller
     {
         if ($request->ship == -1) {
             return redirect()->back()->with('error', __('orders.address_not_found'));
+        }
+        if (\Cart::subtotal(0,'.','') == 0) {
+            return redirect()->back()->with('error', __('orders.error_total_cart'));
         }
         \DB::beginTransaction();
         try {
@@ -77,7 +82,8 @@ class OrderController extends Controller
 
             \DB::commit();
             $order = $order->with(['detailOrders'])->first();
-
+            Mail::to($request->email)->send(new OrderSuccess($order));
+            
             return redirect()->route('orders.done')->with('status', __('carts.ordersSuccess'));
         } catch (Exception $e) {
             \DB::rollback();

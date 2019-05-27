@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+@section('title', 'Masha life')
 @section('content')
 @include('layouts.nav')
 <div id="home">
@@ -141,6 +142,12 @@
                             <!-- Product Single -->
                             <!-- /Product Single -->
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-11"></div>
+                    <div class="col-md-1">
+                        <a href="{{ route('allTopSale') }}" class="btn btn-default">{{ __('app.viewAll') }}</a>
                     </div>
                 </div>
                 <!-- /Product Slick -->
@@ -313,6 +320,12 @@
                 <!-- /Product Single -->
             </div>
             <!-- /row -->
+            <div class="col-md-12">
+                <div class="col-md-11"></div>
+                <div class="col-md-1">
+                    <a href="{{ route('allTopOrder') }}" class="btn btn-default">{{ __('app.viewAll') }}</a>
+                </div>
+            </div>
         </div>
         <!-- /container -->
     </div>
