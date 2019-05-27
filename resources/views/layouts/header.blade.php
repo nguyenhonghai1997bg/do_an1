@@ -9,10 +9,13 @@
             <div class="pull-right">
                 <ul class="header-top-links">
                     <li class="dropdown default-dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">ENG <i class="fa fa-caret-down"></i></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ session('locale') == 'vi' ? 'Tiếng Việt' : 'ENG'  }} <i class="fa fa-caret-down"></i></a>
                         <ul class="custom-menu">
-                            <li><a href="#">English (ENG)</a></li>
-                            <li><a href="#">Viet Nam (VI)</a></li>
+                            @if(session('locale') == 'vi')
+                                <li><a href="{{ route('set_locale', ['locale' => 'en']) }}">English (ENG)</a></li>
+                            @else
+                                <li><a href="{{ route('set_locale', ['locale' => 'vi']) }}">Viet Nam (VI)</a></li>
+                            @endif
                         </ul>
                     </li>
                     
@@ -29,7 +32,7 @@
                 <!-- Logo -->
                 <div class="header-logo">
                     <a class="logo" href="{{ route('home') }}">
-                        <img src=" {{ asset('users/img/logo.png') }}" alt="">
+                        <img src=" {{ asset('images/masha-life.png') }}" alt="">
                     </a>
                 </div>
                 <!-- /Logo -->

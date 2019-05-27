@@ -40,6 +40,7 @@
         'hethang' => 'Hết hàng',
         'hethangroi' => 'Sản phẩm đã hết hàng',
         'search' => 'Tìm kiếm',
-        'welcome' => 'Chào mừng bạn đến với Masha Life!'
+        'welcome' => 'Chào mừng bạn đến với Masha Life!',
+        'count' => 'Số lượng'
     ];
 ?>

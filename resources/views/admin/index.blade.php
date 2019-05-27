@@ -153,7 +153,7 @@
           <div class="col-md-6">
             <div class="card">
               <div class="card-header border-transparent">
-                <h3 class="card-title">Latest Orders</h3>
+                <h3 class="card-title">{{ __('products.topOrders') }}</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -167,72 +167,38 @@
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <div class="table-responsive">
-                  <table class="table m-0">
+                  <table class="table table-hover">
                     <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Item</th>
-                      <th>Status</th>
-                      <th>Popularity</th>
-                    </tr>
+                      <tr>
+                        <th>#</th>
+                        <th>{{ __('products.name') }}</th>
+                        <th>{{ __('products.price') }}</th>
+                        <th>{{ __('products.image') }}</th>
+                        <th>{{ __('products.category') }}</th>
+                        <th>{{ __('app.count') }}</th>
+                        <th width="10%">{{ __('app.action') }}</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-info">Processing</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
+                      @if(count($topOrderProducts) < 1)
+                        <tr>
+                          <td>{{ __('app.listEmpty') }}</td>
+                        </tr>
+                      @else
+                        @foreach($topOrderProducts as $key => $product['product'])
+                            <tr id="column-{{ $product['product']['product']->id }}">
+                            <td>{{ app('request')->input('page') ? \App\Category::PERPAGE * (app('request')->input('page') - 1) + ($key + 1) :  $key + 1 }}</td>
+                            <td><a href="{{ route('backend.products.show', ['id' => $product['product']['product']->id, 'slug' => $product['product']['product']->slug]) }}">{{ $product['product']['product']->name }}</a></td>
+                            <td>{{ number_format($product['product']['product']->price) . ' VND' }}</td>
+                            <td><img src="{{ asset('images/products/' . $product['product']['product']->images->first()->image_url) }}" width="40px" onclick="zoomImage({{ $product['product']['product']->id }})" class="img-product" id="image-{{ $product['product']['product']->id }}" data-toggle="modal" data-target="#showImage"></td>
+                            <td>{{ $product['product']['product']->category->name }}</td>
+                            <td>{{ $product['product']['count'] }}</td>
+                            <td>
+                              <a class="text-primary fa fa-edit ml-2" id="edit-icon" href="{{ route('products.edit', ['id' => $product['product']['product']->id]) }}"></a>
+                            </td>
+                          </tr>
+                        @endforeach
+                      @endif
                     </tbody>
                   </table>
                 </div>
@@ -240,10 +206,33 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
               </div>
               <!-- /.card-footer -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">{{ __('orders.doingInCurrentDay') }}</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="position-relative mb-4">
+                  <canvas id="countOrderInCuurrentDay" style="height:250px"></canvas>
+                </div>
+              </div>
+              <div class="d-flex flex-row justify-content-center">
+                  <span class="mr-2">
+                    {{ __('orders.doing') }}
+                  </span>
+
+                </div>
+              <!-- /.card-body -->
             </div>
           </div>
         </div>
@@ -419,6 +408,64 @@
 
   chartjs(year);
   countOrder(year)
+
+
+
+  var pieChartCanvas = $('#countOrderInCuurrentDay').get(0).getContext('2d')
+        var pieChart       = new Chart(pieChartCanvas)
+        var PieData        = [
+          {
+            value    : {{ $ordersInCurrentDay['ordersDone'] }},
+            color    : '#00a65a',
+            highlight: '#00a65a',
+            label    : 'Đã giao hàng'
+          },
+          {
+            value    : {{ $ordersInCurrentDay['ordersWaiting'] }},
+            color    : '#f39c12',
+            highlight: '#f39c12',
+            label    : 'Đơn hàng đang chờ'
+          },
+          {
+            value    : {{ $ordersInCurrentDay['ordersProcess'] }},
+            color    : '#00c0ef',
+            highlight: '#00c0ef',
+            label    : 'Đơn hàng đang xử lý'
+          },
+          {
+            value    : {{ $ordersInCurrentDay['ordersDelete'] }},
+            color    : '#f56954',
+            highlight: '#f56954',
+            label    : 'Đơn hàng đã xóa'
+          }
+        ]
+        var pieOptions     = {
+          //Boolean - Whether we should show a stroke on each segment
+          segmentShowStroke    : true,
+          //String - The colour of each segment stroke
+          segmentStrokeColor   : '#fff',
+          //Number - The width of each segment stroke
+          segmentStrokeWidth   : 2,
+          //Number - The percentage of the chart that we cut out of the middle
+          percentageInnerCutout: 50, // This is 0 for Pie charts
+          //Number - Amount of animation steps
+          animationSteps       : 100,
+          //String - Animation easing effect
+          animationEasing      : 'easeOutBounce',
+          //Boolean - Whether we animate the rotation of the Doughnut
+          animateRotate        : true,
+          //Boolean - Whether we animate scaling the Doughnut from the centre
+          animateScale         : false,
+          //Boolean - whether to make the chart responsive to window resizing
+          responsive           : true,
+          // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+          maintainAspectRatio  : true,
+          //String - A legend template
+          legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions)
 </script>
 <!-- /.content-wrapper -->
 @endsection

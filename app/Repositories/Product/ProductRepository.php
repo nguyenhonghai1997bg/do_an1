@@ -150,6 +150,15 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
         return $products;
     }
 
+    public function allTopSale()
+    {
+        $products = $this->model->active()->whereNotNull('sale_id')->with(['sale' => function($query) {
+            $query->orderBy('sale_price');
+        }])->paginate(\App\Product::PERPAGE);
+
+        return $products;
+    }
+
     public function moreProduct($id, $price, $category_id)
     {
         return $this->model->active()->where('id', '!=', $id)->where(function($query) use ($price, $category_id){
@@ -163,6 +172,28 @@ class ProductRepository extends RepositoryEloquent implements ProductRepositoryI
         $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->limit(4)->get()->toArray();
         foreach($top as $item) {
             $list[] = $this->model->find($item['product_id']);
+        }
+
+        return $list;
+    }
+
+    public function allTopOrder()
+    {
+        $list = [];
+        $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->get();
+        foreach($top as $item) {
+            $list[] = $this->model->find($item['product_id']);
+        }
+
+        return $list;
+    }
+
+    public function topOrdersAdmin()
+    {
+        $list = [];
+        $top = \App\DetailOrder::select(\DB::raw('count(id) as count'), 'product_id')->groupBy('product_id')->orderBy('count', 'DESC')->limit(8)->get()->toArray();
+        foreach($top as $item) {
+            $list[] = ['product' => $this->model->find($item['product_id']), 'count' => $item['count']];
         }
 
         return $list;

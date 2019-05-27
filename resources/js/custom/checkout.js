@@ -56,10 +56,16 @@ function updateCart(rowId) {
     }
   })
 }
-
+$(document).ready(function() {
+  var destinations = $('#ddress-order').val();
+  address(destinations);
+});
 $('#address-order').change(function(){
-  console.log($(this).val());
   var destinations = $(this).val();
+  address(destinations);
+})
+
+function address(destinations) {
   var request = 'https://maps.googleapis.com/maps/api/distancematrix/json?&origins=dai-hoc-tai-nguyen-va-moi-truong-ha-noi&destinations=' + destinations + '&key=AIzaSyC08YIQaMRFrkprEUy7rkd4dM6-4HJTzZ0';
   $.ajax({
     url: 'https://cors-anywhere.herokuapp.com/' + request,
@@ -94,6 +100,6 @@ $('#address-order').change(function(){
       console.log(error)
     }
   })
-})
+}
 
   

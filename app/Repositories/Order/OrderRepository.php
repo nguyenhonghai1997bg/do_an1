@@ -32,7 +32,7 @@ class OrderRepository extends RepositoryEloquent implements OrderRepositoryInter
 
     public function listOrderDone()
     {
-        $orders = $this->model->isNotDelete()->where('status', $this->model::DONE)->with(['detailOrders', 'user'])->paginate($this->perPage);
+        $orders = $this->model->isNotDelete()->where('status', $this->model::DONE)->with(['detailOrders', 'user'])->orderBy('updated_at', 'DESC')->paginate($this->perPage);
 
         return $orders;
     }
@@ -73,7 +73,7 @@ class OrderRepository extends RepositoryEloquent implements OrderRepositoryInter
 
     public function listOrderDeleted()
     {
-        $orders = $this->model->isDeleted()->paginate($this->perPageDetail);
+        $orders = $this->model->isDeleted()->orderBy('deleted_at', 'DESC')->paginate($this->perPageDetail);
 
         return $orders;
     }
@@ -187,5 +187,26 @@ class OrderRepository extends RepositoryEloquent implements OrderRepositoryInter
     public function ordersDoneDownload()
     {
         return $this->model->isNotDelete()->where('status', $this->model::DONE)->get()->toArray();
+    }
+
+    public function ordersInCurrentDay()
+    {
+        $currentMonth = \Carbon\Carbon::now()->month;
+        $currentYear = \Carbon\Carbon::now()->year;
+        $currentDay = \Carbon\Carbon::now()->day;
+        $ordersDone = $this->model->isNotDelete()->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->where(\DB::raw('DAY(created_at)'), $currentDay)->where('status', $this->model::DONE)->count();
+        $ordersProcess = $this->model->isNotDelete()->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->where(\DB::raw('DAY(created_at)'), $currentDay)->where('status', $this->model::PROCESS)->count();
+
+        $ordersWaiting = $this->model->isNotDelete()->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->where(\DB::raw('DAY(created_at)'), $currentDay)->where('status', $this->model::WAITING)->count();
+
+        $ordersDelete = $this->model->isDeleted()->where(\DB::raw('MONTH(created_at)'), $currentMonth)->where(\DB::raw('YEAR(created_at)'), $currentYear)->where(\DB::raw('DAY(created_at)'), $currentDay)->count();
+
+        $list = [];
+        $list['ordersDone'] = $ordersDone;
+        $list['ordersProcess'] = $ordersProcess;
+        $list['ordersWaiting'] = $ordersWaiting;
+        $list['ordersDelete'] = $ordersDelete;
+
+        return $list;
     }
 }

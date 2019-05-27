@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Masha life | ' . __('carts.checkout'))
 @section('content')
-
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 
@@ -106,7 +106,7 @@
                     </td>
                     <td class="total text-center"><strong class="primary-color" id="price-row-{{ $cart->rowId }}">{{ number_format($cart->price * $cart->qty) }}</strong></td>
                     <td class="text-right">
-                      <a href="#" class="main-btn icon-btn" onclick="deleteCart({{ $cart->id }}, '{{ $cart->rowId }}', '{{ __('app.confirm') }}', '{{ __('cart.confirm') }}')"><i class="fa fa-close"></i></a>
+                      <a href="#" class="main-btn icon-btn" onclick="deleteCart({{ $cart->id }}, '{{ $cart->rowId }}', '{{ __('app.confirm') }}', '{{ __('carts.confirm') }}')"><i class="fa fa-close"></i></a>
                     </td>
                   </tr>
                   @endforeach
