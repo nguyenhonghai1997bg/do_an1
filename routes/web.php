@@ -17,10 +17,12 @@
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home')->middleware(['authUser', 'locale']);
 Route::get('/home', 'HomeController@index')->middleware(['authUser', 'locale']);
+Route::get('change/profile', 'UserController@editProfile')->name('users.edit_profile')->middleware(['auth', 'locale']);
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('users.logout');
 Route::group(['prefix' => '/', 'middleware' => ['authUser', 'locale']], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');
     Route::resource('reviews', 'ReviewController');
+    Route::post('change/profile', 'UserController@updateProfile')->name('users.update_profile');
     // cart
     Route::post('carts', 'CartController@store');
     Route::delete('carts/{id}/destroy', 'CartController@destroy');
@@ -49,7 +51,8 @@ Route::get('/admin/products/{id}/{slug}', 'ProductController@show')->name('backe
 
 Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin', 'locale'], 'namespace' => 'Admin'], function(){
     Route::get('/', 'HomeController@index')->name('admin.home');
-
+    Route::get('edit-profile', 'UserController@editProfile')->name('admin.edit_profile');
+    Route::post('edit-profile', 'UserController@updateProfile')->name('admin.update_profile');
     Route::group(['prefix' => 'manager'], function(){
         Route::resources([
             'catalogs' => 'CatalogController',

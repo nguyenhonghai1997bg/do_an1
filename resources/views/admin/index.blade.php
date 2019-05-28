@@ -336,7 +336,6 @@
         year: year
       },
       success: function(data) {
-        console.log(data)
         var pieChartCanvas = $('#countOrder').get(0).getContext('2d')
         var pieChart       = new Chart(pieChartCanvas)
         var PieData        = [

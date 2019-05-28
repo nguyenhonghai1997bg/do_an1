@@ -14,5 +14,10 @@
         'login' => 'Đăng nhập',
         'register' => 'Đăng ký',
         'remember' => 'Nhớ tài khoản',
+        'registered' => 'Đăng ký thành công',
+        'password' => 'Mật khẩu',
+        'password_confirmation' => 'Xác nhận mật khẩu',
+        'birth_day' => 'Sinh nhật',
+        'updated' => 'Cập nhật thông tin thành công',
     ];
 ?>

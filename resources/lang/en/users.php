@@ -14,5 +14,8 @@
         'login' => 'Login',
         'register' => 'Register',
         'remember' => 'Remember the account',
+        'registered' => 'Register successfully',
+        'birth_day' => 'Birth day',
+        'updated' => 'Updated successfully',
     ];
 ?>
