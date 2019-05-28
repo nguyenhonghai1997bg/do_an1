@@ -29,6 +29,11 @@
     @elseif ($order->status == \App\Order::WAITING)
       <span class="text-waring">{{ __('orders.waiting') }}</span>
     @endif
+    @if($order->is_paymented == 1)
+      <span class="ml-2 text-success">( {{ __('orders.paymented') }} )</span>
+    @else
+      <span class="ml-2 text-danger">( {{ __('orders.not_paymented') }} )</span>
+    @endif
   </div>
 
   </div>

@@ -37,6 +37,9 @@
         'totalShip' => 'Money ship',
         'doingInCurrentDay' => 'Statistics of orders for the day',
         'updated_at' => 'Delivery time',
-        'error_total_cart' => 'Total amount cannot be 0'
+        'error_total_cart' => 'Total amount cannot be 0',
+        'paymented' => 'Paymented',
+        'not_paymented' => 'Not Paymented',
+        'error_bankcode' => 'bank code error',
     ];
 ?>

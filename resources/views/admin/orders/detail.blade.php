@@ -40,6 +40,11 @@
                 <span class="text-success">{{ __('orders.done') }}</span>
               @endif
             @endif
+            @if($order->is_paymented == 1)
+              <span class="ml-2 text-success">( {{ __('orders.paymented') }} )</span>
+            @else
+              <span class="ml-2 text-danger">( {{ __('orders.not_paymented') }} )</span>
+            @endif
           </div>
           @if($order->deleted_at)
             <span>{{ Form::button(__('orders.deleted'), ['id' => 'danger', 'class' => 'btn btn-danger btn-sm mt-1', 'id' => 'perform1']) }}</span>

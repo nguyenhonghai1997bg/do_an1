@@ -37,6 +37,9 @@
 		'totalShip' => 'Tiền ship',
 		'doingInCurrentDay' => 'Thống kê các đơn hàng trong ngày',
 		'updated_at' => 'Giao hàng lúc',
-		'error_total_cart' => 'Tổng tiền không được bằng 0'
+		'error_total_cart' => 'Tổng tiền không được bằng 0',
+		'paymented' => 'Đã thanh toán',
+		'not_paymented' => 'Chưa thanh toán',
+		'error_bankcode' => 'Bạn phải chọn ngân hàng',
 	];
 ?>

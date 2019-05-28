@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home')->middleware(['authUser', 'locale']);
 Route::get('/home', 'HomeController@index')->middleware(['authUser', 'locale']);
 Route::get('change/profile', 'UserController@editProfile')->name('users.edit_profile')->middleware(['auth', 'locale']);
+Route::get('vnpay_return/{order_id}', 'OrderController@vnpayReturn')->name('vnpay_return');
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth')->name('users.logout');
 Route::group(['prefix' => '/', 'middleware' => ['authUser', 'locale']], function() {
     Route::get('products/{id}/{slug}', 'ProductController@show')->name('frontend.products.show');

@@ -102,4 +102,12 @@ function address(destinations) {
   })
 }
 
+$('#paymethod_id').change(function() {
+  if ($(this).val() == 2) {
+    $('#bank_code').show();
+  } else {
+    $('#bank_code').hide();
+  }
+})
+
   

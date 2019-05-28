@@ -67,12 +67,63 @@
             <div class="section-title">
               <h4 class="title">{{ __('app.paymethods') }}</h4>
             </div>
-            @foreach(\App\Paymethod::all(['id', 'name']) as $paymethod)
+            <div class="col-md-12">
+            <select name="paymethod_id" class="form-control" id="paymethod_id" style="margin-bottom: 30px;">
+              @foreach(\App\Paymethod::all(['id', 'name']) as $paymethod)
+                <option value="{{ $paymethod->id }}">{{ $paymethod->name }}</option>
+              @endforeach
+            </select>
+            </div>
+            <div style="display:none;" id="bank_code">
+              <div class="col-md-3">
+                <label>Chọn ngân hàng</label>
+              </div>
+              <div class="col-md-9">
+                  <select name="bankcode" id="bankcode" class="form-control mt-4">
+                      <option value>Không chọn </option>            
+                      <option value="VNPAYQR">VNPAYQR</option>
+                      <option value="VNBANK">LOCAL BANK</option>
+                      <option value="IB">INTERNET BANKING</option>
+                      <option value="ATM">ATM CARD</option>
+                      <option value="INTCARD">INTERNATIONAL CARD</option>
+                      <option value="VISA">VISA</option>
+                      <option value="MASTERCARD"> MASTERCARD</option>
+                      <option value="JCB">JCB</option>
+                      <option value="UPI">UPI</option>
+                      <option value="VIB">VIB</option>
+                      <option value="VIETCAPITALBANK">VIETCAPITALBANK</option>
+                      <option value="SCB">Ngan hang SCB</option>
+                      <option value="NCB">Ngan hang NCB</option>
+                      <option value="SACOMBANK">Ngan hang SacomBank  </option>
+                      <option value="EXIMBANK">Ngan hang EximBank </option>
+                      <option value="MSBANK">Ngan hang MSBANK </option>
+                      <option value="NAMABANK">Ngan hang NamABank </option>
+                      <option value="VNMART"> Vi dien tu VnMart</option>
+                      <option value="VIETINBANK">Ngan hang Vietinbank  </option>
+                      <option value="VIETCOMBANK">Ngan hang VCB </option>
+                      <option value="HDBANK">Ngan hang HDBank</option>
+                      <option value="DONGABANK">Ngan hang Dong A</option>
+                      <option value="TPBANK">Ngân hàng TPBank </option>
+                      <option value="OJB">Ngân hàng OceanBank</option>
+                      <option value="BIDV">Ngân hàng BIDV </option>
+                      <option value="TECHCOMBANK">Ngân hàng Techcombank </option>
+                      <option value="VPBANK">Ngan hang VPBank </option>
+                      <option value="AGRIBANK">Ngan hang Agribank </option>
+                      <option value="MBBANK">Ngan hang MBBank </option>
+                      <option value="ACB">Ngan hang ACB </option>
+                      <option value="OCB">Ngan hang OCB </option>
+                      <option value="IVB">Ngan hang IVB </option>
+                      <option value="SHB">Ngan hang SHB </option>
+                    </select>
+              </div>
+            </div>
+
+            {{-- @foreach(\App\Paymethod::all(['id', 'name']) as $paymethod)
             <div class="input-checkbox">
               {!! Form::radio('paymethod_id', $paymethod->id, false, ['id' => 'payments' . $paymethod->id]) !!}
               <label for="payments{{ $paymethod->id }}" >{{ $paymethod->name }}</label>
             </div>
-            @endforeach
+            @endforeach --}}
           </div>
         </div>
 
