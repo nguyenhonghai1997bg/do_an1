@@ -14,7 +14,7 @@ class AddBirthdayColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->date('birth_day')->nullable();
         });
     }
 
@@ -25,8 +25,12 @@ class AddBirthdayColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('users', 'birth_day'))
+        {
+            Schema::table('users', function (Blueprint $table)
+            {
+                $table->dropColumn('birth_day');
+            });
+        }
     }
 }

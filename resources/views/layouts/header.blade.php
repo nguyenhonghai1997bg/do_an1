@@ -70,7 +70,7 @@
                         </ul>
                         @else
                             <ul class="custom-menu">
-                                <li><a href="#"><i class="fa fa-user-o"></i>{{ __('users.profile') }}</a></li>
+                                <li><a href="{{ route('users.edit_profile') }}"><i class="fa fa-user-o"></i>{{ __('users.profile') }}</a></li>
                                 <li><a href="{{ route('users.show.list-order') }}"><i class="fa fa-heart-o"></i>{{ __('users.listOrders') }}</a></li>
                                 <li><a href="{{ route('users.logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>{{ __('users.logout') }}</a></li>
                             </ul>

@@ -42,6 +42,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'role_id' => \App\Role::USER_ROLE,
+            'birth_day' => $data['birth_day']
         ]);
 
         return redirect()->route('login')->with('status', __('users.registered'));

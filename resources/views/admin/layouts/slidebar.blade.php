@@ -14,7 +14,7 @@
         <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+        <a href="#" class="d-block" data-toggle="modal" data-target="#modalProfile">{{ Auth::user()->name }}</a>
       </div>
     </div>
 
@@ -129,17 +129,22 @@
             </ul>
           </li>
         @endif
-
         <li class="nav-item">
-              <a href="{{ route('logout') }}" class="nav-link">
-                <i class="fa fa-circle-o nav-icon"></i>
-                <p>{{ __('app.logout') }}</p>
-              </a>
-            </li>
+            <a href="{{ route('admin.edit_profile') }}" class="nav-link">
+              <i class="fa fa-circle-o nav-icon"></i>
+              <p>{{ __('users.profile') }}</p>
+            </a>
+          </li>
+        <li class="nav-item">
+          <a href="{{ route('logout') }}" class="nav-link">
+            <i class="fa fa-circle-o nav-icon"></i>
+            <p>{{ __('app.logout') }}</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
 </aside>
-
+</div>

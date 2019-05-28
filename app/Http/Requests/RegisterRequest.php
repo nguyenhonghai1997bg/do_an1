@@ -29,6 +29,7 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string|min:6|max:191|confirmed',
             'address' => 'required|string|min:6|max:191',
             'phone' => 'regex:/(0)[0-9]{9}/',
+            'birth_day' => 'nullable|date'
         ];
     }
 }

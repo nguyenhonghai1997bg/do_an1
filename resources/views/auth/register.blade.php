@@ -34,7 +34,7 @@
       <form method="POST" action="{{ route('register') }}">
         @csrf
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="name" placeholder="Fullname">
+        <input type="text" class="form-control" name="name" placeholder="{{ __('users.name') }}">
           @if ($errors->has('name'))
             <span class="text-danger" role="alert">
               <strong>{{ $errors->first('name') }}</strong>
@@ -42,7 +42,7 @@
           @endif
         </div>
         <div class="form-group has-feedback">
-          <input type="email" class="form-control" name="email" placeholder="Email">
+          <input type="email" class="form-control" name="email" placeholder="{{ __('users.email') }}">
           @if ($errors->has('email'))
             <span class="text-danger" role="alert">
               <strong>{{ $errors->first('email') }}</strong>
@@ -50,7 +50,7 @@
           @endif
         </div>
         <div class="form-group has-feedback">
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="{{ __('users.password') }}">
           @if ($errors->has('password'))
             <span class="text-danger" role="alert">
               <strong>{{ $errors->first('password') }}</strong>
@@ -58,7 +58,7 @@
           @endif
         </div>
         <div class="form-group has-feedback">
-          <input type="password" class="form-control" name="password_confirmation" placeholder="Password Confirm">
+          <input type="password" class="form-control" name="password_confirmation" placeholder="{{ __('users.password_confirmation') }}">
           @if ($errors->has('password_confirmation'))
             <span class="text-danger" role="alert">
               <strong>{{ $errors->first('password_confirmation') }}</strong>
@@ -66,7 +66,15 @@
           @endif
         </div>
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="address" placeholder="Address">
+        <input type="date" class="form-control" name="birth_day" placeholder="{{ __('users.birth_day') }}">
+          @if ($errors->has('birth_day'))
+            <span class="text-danger" role="alert">
+              <strong>{{ $errors->first('birth_day') }}</strong>
+            </span>
+          @endif
+        </div>
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="address" placeholder="{{ __('users.address') }}">
           @if ($errors->has('address'))
             <span class="text-danger" role="alert">
               <strong>{{ $errors->first('address') }}</strong>
@@ -81,6 +89,7 @@
             </span>
           @endif
         </div>
+        
 
         <div class="row">
           <!-- /.col -->
@@ -90,18 +99,6 @@
           <!-- /.col -->
         </div>
       </form>
-
-      <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fa fa-facebook mr-2"></i>
-          Sign up using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fa fa-google-plus mr-2"></i>
-          Sign up using Google+
-        </a>
-      </div>
 
       <a href="{{ route('login') }}" class="text-center">{{ __('app.login') }}</a>
     </div>
