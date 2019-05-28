@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Đặt hàng thành công</title>
+  <title>Đặt hàng thành công</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 	<div>Bạn đã đặt hàng thành công, dưới đây là chi tiết đơn hàng của bạn:</div>
@@ -23,6 +24,11 @@
       <span class="text-success">{{ __('orders.done') }}</span>
     @elseif ($order->status == \App\Order::WAITING)
       <span class="text-waring">{{ __('orders.waiting') }}</span>
+    @endif
+    @if($paymented == 1)
+      <span class="ml-2 text-success">( {{ __('orders.paymented') }} )</span>
+    @else
+      <span class="ml-2 text-danger">( {{ __('orders.not_paymented') }} )</span>
     @endif
   </div>
 

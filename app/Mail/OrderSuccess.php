@@ -13,14 +13,16 @@ class OrderSuccess extends Mailable
     use Queueable, SerializesModels;
 
     public $order;
+    public $paymented;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order, $paymented = 0)
     {
         $this->order = $order;
+        $this->paymented = $paymented;
     }
 
     /**
@@ -34,6 +36,7 @@ class OrderSuccess extends Mailable
             ->subject("Đặt hàng thành công")
             ->with([
                 'order' => $this->order,
+                'paymented' => $this->paymented,
             ]);
     }
 }

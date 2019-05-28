@@ -10,6 +10,7 @@ class Order extends Model
     const WAITING = 0;
     const PROCESS = 1;
     const DONE = 2;
+    const PAYMENTED = 1;
     protected $guarded = ['id'];
 
     public function detailOrders()
