@@ -9,7 +9,7 @@
 <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="#">{{ __('app.home') }}</a></li>
+                <li><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
                 <li><a href="#">{{ request('category_id') ? \App\Category::findOrFail(request('category_id'))->name . ' ' . \App\Category::findOrFail(request('category_id'))->catalog->name : 'all' }}</a></li>
             <li class="active">{{ __('app.products') }}</li>
             </ul>
