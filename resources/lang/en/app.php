@@ -43,5 +43,9 @@
         'welcome' => 'Welcome to Masha Life!',
         'count' => 'Quantity',
         'back' => 'Back',
+        'addres_company' => 'Hanoi University of Natural Resources and Environment 
+                        Head office: No. 41A, Phu Dien Street, Bac Tu Liem District, TP. Hanoi',
+        'map' => 'Map',
+        'social' => 'Social',
     ];
 ?>

@@ -43,5 +43,9 @@
         'welcome' => 'Chào mừng bạn đến với Masha Life!',
         'count' => 'Số lượng',
         'back' => 'Quay lại',
+        'addres_company' => 'Đại học Tài Nguyên và Môi Trường Hà Nội  Trụ sở chính: Số 41A đường Phú Diễn, Q. Bắc Từ Liêm, TP. Hà Nội',
+        'map' => 'Bản đồ',
+        'social' => 'Mạng xã hội',
+
     ];
 ?>

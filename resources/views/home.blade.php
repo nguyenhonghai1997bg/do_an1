@@ -66,7 +66,7 @@
                 <!-- section-title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">{{ __('products.topSale') }}</h2>
+                        <h4 class="title">{{ __('products.topSale') }}</h4>
                         <div class="pull-right">
                             <div class="product-slick-dots-1 custom-dots"></div>
                         </div>
@@ -108,9 +108,9 @@
                                     </div>
                                     <div class="product-body">
                                         @if($product->sale)
-                                            <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                            <h4 class="product-price">{{ number_format(floor($product->price - (($product->price * $product->sale->sale_price)/100))) }} vnd <del class="product-old-price">{{ number_format($product->price) }} vnd</del></h4>
                                         @else
-                                            <h3 class="product-price">{{ $product->price }} VND</h3>
+                                            <h4 class="product-price">{{ number_format($product->price) }} vnd</h4>
                                         @endif
                                         <div class="product-rating">
                                             @for($i = 1; $i <= $avg; $i++)
@@ -118,9 +118,7 @@
                                             @endfor
                                         </div>
                                         <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
-                                        <div class="product-btns">
-                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                        <div class="product-btns" style="text-align: center;">
                                             @if($product->warehouse->quantity > 0)
                                                 <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
                                                 <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
@@ -159,7 +157,7 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">{{ __('products.topView') }}</h2>
+                        <h4 class="title">{{ __('products.topView') }}</h4>
                     </div>
                 </div>
                 <!-- section title -->
@@ -174,9 +172,9 @@
                             </div>
                             <div class="product-body">
                                 @if($product->sale)
-                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                    <h3 class="product-price">{{ number_format(floor($product->price - (($product->price * $product->sale->sale_price)/100))) }} vnd <del class="product-old-price">{{ number_format($product->price) }} vnd</del></h3>
                                 @else
-                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                    <h3 class="product-price">{{ number_format($product->price) }} vnd</h3>
                                 @endif
                                 <div class="product-rating">
                                     @for($i = 1; $i <= $avg; $i++)
@@ -184,9 +182,7 @@
                                     @endfor
                                 </div>
                                 <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
-                                <div class="product-btns">
-                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                    <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                <div class="product-btns" style="text-align: center;">
                                     @if($product->warehouse->quantity > 0)
                                             <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
                                             <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
@@ -218,7 +214,7 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">{{ __('products.latestProduct') }}</h2>
+                        <h4 class="title">{{ __('products.latestProduct') }}</h4>
                     </div>
                 </div>
                 <!-- section title -->
@@ -233,9 +229,9 @@
                             </div>
                             <div class="product-body">
                                 @if($product->sale)
-                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                    <h3 class="product-price">{{ number_format(floor($product->price - (($product->price * $product->sale->sale_price)/100))) }} vnd <del class="product-old-price">{{ number_format($product->price) }} vnd</del></h3>
                                 @else
-                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                    <h3 class="product-price">{{ number_format($product->price) }} vnd</h3>
                                 @endif
                                 <div class="product-rating">
                                     @for($i = 1; $i <= $avg; $i++)
@@ -243,9 +239,7 @@
                                     @endfor
                                 </div>
                                 <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
-                                <div class="product-btns">
-                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                    <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+                                <div class="product-btns" style="text-align: center;">
                                     @if($product->warehouse->quantity > 0)
                                             <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
                                             <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
@@ -272,7 +266,7 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">{{ __('products.topOrders') }}</h2>
+                        <h4 class="title">{{ __('products.topOrders') }}</h4>
                     </div>
                 </div>
                 <!-- section title -->
@@ -288,9 +282,9 @@
                             </div>
                             <div class="product-body">
                                 @if($product->sale)
-                                    <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                    <h3 class="product-price">{{ number_format(floor($product->price - (($product->price * $product->sale->sale_price)/100))) }} vnd <del class="product-old-price">{{ number_format($product->price) }} vnd</del></h3>
                                 @else
-                                    <h3 class="product-price">{{ $product->price }} VND</h3>
+                                    <h3 class="product-price">{{ number_format($product->price) }} vnd</h3>
                                 @endif
                                 <div class="product-rating">
                                     @for($i = 1; $i <= $avg; $i++)
@@ -298,8 +292,7 @@
                                     @endfor
                                 </div>
                                 <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
-                                <div class="product-btns">
-                                    <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                <div class="product-btns" style="text-align: center;">
                                     @if($product->warehouse->quantity > 0)
                                         <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
                                             <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
