@@ -239,4 +239,3 @@ class OrderController extends Controller
     }
 
 }
-http://hhtruyen.com/vnpay_return/4?vnp_Amount=28423000&vnp_BankCode=NCB&vnp_BankTranNo=20190529135203&vnp_CardType=ATM&vnp_OrderInfo=Thanh+to%C3%A1n+mua+h%C3%A0ng&vnp_PayDate=20190529135614&vnp_ResponseCode=00&vnp_TmnCode=6SU1J9O6&vnp_TransactionNo=13147272&vnp_TxnRef=4&vnp_SecureHashType=SHA256&vnp_SecureHash=d4ac15ad164b493d384caf7be21445945a9ece1b0d0961a3f221f96ed858503a

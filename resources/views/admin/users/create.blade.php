@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
-@section('content')
 
+@section('title', __('app.add'))
+@section('content')
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 <script src="{{ asset('plugins/input-mask/jquery.inputmask.js') }}"></script>
@@ -17,7 +18,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
-          <li class="breadcrumb-item active">{{ __('role.lists') }}</li>
+          <li class="breadcrumb-item active">{{ __('users.create') }}</li>
         </ol>
       </div>
     </div>
@@ -109,7 +110,7 @@
         </div>
       </div>
       <div class="form-group ml-3">
-        <input type="submit" value="users.create" class="btn btn-info">
+      <input type="submit" value="{{ __('users.create') }}" class="btn btn-info">
         <a href="{{ url()->previous() }}" class="btn btn-default">{{ __('app.back') }}</a>
       </div>
     {{ Form::close() }}

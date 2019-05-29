@@ -19,5 +19,6 @@
         'password_confirmation' => 'Xác nhận mật khẩu',
         'birth_day' => 'Sinh nhật',
         'updated' => 'Cập nhật thông tin thành công',
+        'create' => 'Thêm mới',
     ];
 ?>

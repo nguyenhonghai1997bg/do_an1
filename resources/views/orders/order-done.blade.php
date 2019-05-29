@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Masha life | Đơn hàng đã thực hiện xong')
 @section('content')
-
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 
