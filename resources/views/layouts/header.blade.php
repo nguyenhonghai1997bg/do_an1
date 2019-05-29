@@ -9,9 +9,9 @@
             <div class="pull-right">
                 <ul class="header-top-links">
                     <li class="dropdown default-dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ session('locale') == 'vi' ? 'Tiếng Việt' : 'ENG'  }} <i class="fa fa-caret-down"></i></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ Config::get('app.locale') == 'vi' ? 'Tiếng Việt' : 'ENG'  }} <i class="fa fa-caret-down"></i></a>
                         <ul class="custom-menu">
-                            @if(session('locale') == 'vi')
+                            @if(Config::get('app.locale') == 'vi')
                                 <li><a href="{{ route('set_locale', ['locale' => 'en']) }}">English (ENG)</a></li>
                             @else
                                 <li><a href="{{ route('set_locale', ['locale' => 'vi']) }}">Viet Nam (VI)</a></li>

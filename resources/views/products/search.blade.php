@@ -141,9 +141,9 @@
                                     </div>
                                     <div class="product-body">
                                         @if($product->sale)
-                                            <h3 class="product-price">{{ floor($product->price - (($product->price * $product->sale->sale_price)/100)) }} VND <del class="product-old-price">{{ $product->price }} VND</del></h3>
+                                            <h3 class="product-price">{{ number_format(floor($product->price - (($product->price * $product->sale->sale_price)/100))) }} vnd <del class="product-old-price">{{ number_format($product->price) }} vnd</del></h3>
                                         @else
-                                            <h3 class="product-price">{{ $product->price }} VND</h3>
+                                            <h3 class="product-price">{{ number_format($product->price) }} vnd</h3>
                                         @endif
                                         <div class="product-rating">
                                             @for($i = 1; $i <= $avg; $i++)
@@ -151,7 +151,7 @@
                                             @endfor
                                         </div>
                                         <h2 class="product-name"><a href="{{ route('frontend.products.show', ['id' => $product->id, 'slug' => $product->slug]) }}">{{ $product->name }}</a></h2>
-                                        <div class="product-btns">
+                                        <div class="product-btns" style="text-align: center;">
                                             @if($product->warehouse->quantity > 0)
                                                 <button class="primary-btn add-to-cart btn-sm" id="add-cart" onclick="addCart({{ $product->id }}, '{{ $product->name }}', {{ $product->sale ? floor($product->price - (($product->price * $product->sale->sale_price)/100)) : $product->price }}, '{{ $product->images->first()->image_url }}')">
                                                 <i class="fa fa-shopping-cart"></i> {{ __('app.addToCart') }}
