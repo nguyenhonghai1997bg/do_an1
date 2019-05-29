@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
-@section('content')
 
+@section('title', __('role.lists'))
+@section('content')
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
 
@@ -12,7 +13,7 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">{{ __('app.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.home) }}">{{ __('app.home') }}</a></li>
           <li class="breadcrumb-item active">{{ __('role.lists') }}</li>
         </ol>
       </div>

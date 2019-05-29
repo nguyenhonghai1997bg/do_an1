@@ -41,6 +41,7 @@
         'hethangroi' => 'The product is out of stock',
         'search' => 'Search',
         'welcome' => 'Welcome to Masha Life!',
-        'count' => 'Quantity'
+        'count' => 'Quantity',
+        'back' => 'Back',
     ];
 ?>

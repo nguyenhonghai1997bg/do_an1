@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
-@section('content')
 
+@section('title', __('users.listNewusers'))
+@section('content')
 <script src="{{ asset('plugins/alertifyjs/alertify.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/alertifyjs/css/alertify.min.css') }}">
-
 <section class="content-header ml-2">
   <div class="container-fluid">
     <div class="row mb-2">

@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\HappyBirthday',
     ];
 
     /**
@@ -26,6 +26,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('happy:birthday')
+                    ->timezone('Asia/Ho_Chi_Minh')
+                    ->withoutOverlapping()
+                    ->dailyAt('06:00');
     }
 
     /**

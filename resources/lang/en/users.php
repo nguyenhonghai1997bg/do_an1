@@ -17,5 +17,6 @@
         'registered' => 'Register successfully',
         'birth_day' => 'Birth day',
         'updated' => 'Updated successfully',
+        'create' => 'Create',
     ];
 ?>

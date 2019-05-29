@@ -32,7 +32,7 @@
                 <!-- Logo -->
                 <div class="header-logo">
                     <a class="logo" href="{{ route('home') }}">
-                        <img src=" {{ asset('images/masha-life.png') }}" alt="">
+                        <img src="{{ asset('images/masha-life.png') }}" alt="">
                     </a>
                 </div>
                 <!-- /Logo -->
